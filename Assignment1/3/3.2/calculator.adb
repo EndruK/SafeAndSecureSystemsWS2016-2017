@@ -43,14 +43,9 @@ begin
             Put("Do you want to evaluate another expression?(y/n)");
             New_Line;
             Get(User_Answer);
-            case User_Answer is
-                when 'Y' | 'y' =>
-                    exit User_Input_Loop;
-                when 'N' | 'n' =>
-                    exit Program_Loop;
-                when others =>
-                    Put("Wrong input! Please type either y or n");
-            end case;
+            exit User_Input_Loop when User_Answer = 'Y' or User_Answer = 'y';
+            exit Program_Loop when User_Answer = 'N' or User_Answer = 'n';
+            Put("Wrong input! Please type either y or n");
         end loop User_Input_Loop;
     end loop Program_Loop;
 end Calculator;
