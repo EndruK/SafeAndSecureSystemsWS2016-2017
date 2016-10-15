@@ -8,7 +8,7 @@ RN
 RV NO_IO
 RV SPARK_05
 
-U hello%b		hello.adb		7cb2e1b6 NE OO SU
+U hello%b		hello.adb		dc6963fe NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 
@@ -19,7 +19,7 @@ D a-stream.ads		20160516092929 119b8fb3 ada.streams%s
 D a-tags.ads		20160516092932 01f5e3ef ada.tags%s
 D a-textio.ads		20160516092932 386df5d4 ada.text_io%s
 D a-unccon.ads		20160516092931 f9eb8f06 ada.unchecked_conversion%s
-D hello.adb		20161011154123 44df1462 hello%b
+D hello.adb		20161015123522 e404962a hello%b
 D interfac.ads		20160516092928 5ab55268 interfaces%s
 D i-cstrea.ads		20160516092927 e53d8b8e interfaces.c_streams%s
 D system.ads		20160516092929 6326c08a system%s
@@ -35,10 +35,11 @@ D s-traent.ads		20160516092928 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20160516092930 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20160516092931 1b7d22d2 system.wch_con%s
 X 1 ada.ads
-16K9*Ada 19e8 8|1r6 1r23
+16K9*Ada 19e8 8|1r6 2r5
 X 6 a-textio.ads
-49K13*Text_IO 471e16 8|1w10 1r27
-263U14*Put_Line 8|4s3
+49K13*Text_IO 471e16 8|1w10 2r9
+166U14*New_Line 8|6s3
+263U14*Put_Line 8|5s3
 X 8 hello.adb
-2U11*Hello 2b11 5l5 5t10
+3U11*Hello 3b11 7l5 7t10
 

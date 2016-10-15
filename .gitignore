@@ -1,3 +1,10 @@
+# ignore all files
 *
+# unignore folders
 !/**/
+# unignore all files with an extension
 !*.*
+
+#ignore .o and .ali
+*.o
+*.ali
