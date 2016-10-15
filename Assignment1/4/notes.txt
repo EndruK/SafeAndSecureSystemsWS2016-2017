@@ -1,0 +1,9 @@
+a)
+- 1st loop will print the numbers from 1 to 3
+- 2nd loop should print the numbers from 3 to 1 but doesn't proceed
+- 3rd loop will print the numbers from 3 to 1 (because the range was inverted)
+- 4th loop should print the numbers from 1 to 3 but doesn't proceed
+
+b)
+- Compilation Unit missing -> no compilation
+- loop 2 and 4 will produce warnings and are not executed because they are executed on a null range
