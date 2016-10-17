@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- Kai Gerrit Rüdsdorf 100141
 with Ada.Text_IO;
 procedure Test is
 begin
