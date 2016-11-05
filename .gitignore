@@ -5,7 +5,7 @@
 # unignore all files with an extension
 !*.*
 # unignore make files
-!make
+!makefile
 
 #ignore .o and .ali
 *.o
