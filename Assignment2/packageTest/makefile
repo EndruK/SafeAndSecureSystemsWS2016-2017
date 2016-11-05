@@ -10,10 +10,10 @@ OUTPUT = weekday
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OUTPUT): $(SRC)
-	gcc -c $^ $(CFLAGS)
-	gnatbind $(OUTPUT)
-	gnatlink $(OUTPUT)
-	gnatmake $(OUTPUT)
-	make clean
+  gcc -c $^ $(CFLAGS)
+  gnatbind $(OUTPUT)
+  gnatlink $(OUTPUT)
+  gnatmake $(OUTPUT)
+  make clean
 clean:
-	rm *.ali *.o
+  rm *.ali *.o
