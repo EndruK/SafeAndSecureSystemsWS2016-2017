@@ -7,8 +7,7 @@ package body Card is
   begin -- Pick
     Random_Suit(s);
     Random_Value(v);
-    c.s := s;
-    c.v := v;
+    c := (s,v);
   end Pick;
 
   procedure Random_Suit(s : out Suit) is
