@@ -1,5 +1,11 @@
--- André Karge 110033
--- K. Gerrit Lünsdorf 100141
+--------------------------------------------------------------------------------
+--
+--  Program: Card_Game
+--  Purpose: Display three different cards
+--  Author: André Karge (andre.karge@uni-weimar.de) 110033
+--          K. Gerrit Lünsdorf (kai.gerrit.luensdorf@uni-weimar.de) 100141
+--
+--------------------------------------------------------------------------------
 with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Numerics.Discrete_Random, Card;
 use Ada.Text_IO, Ada.Integer_Text_IO;
 
