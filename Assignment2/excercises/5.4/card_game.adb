@@ -7,7 +7,7 @@
 --
 --------------------------------------------------------------------------------
 with Card;
-
+use Card;
 procedure Card_Game is
   Card1 : Card.Card;
   Card2 : Card.Card;
@@ -17,9 +17,7 @@ begin -- Card_Game
   Card.Pick(Card2);
   Card.Pick(Card3);
   loop
-    if Card.Equals(Card1, Card2) or else
-        Card.Equals(Card2, Card3) or else
-        Card.Equals(Card1, Card3) then
+    if Card1 = Card2 or else Card1 = Card3 or else Card2 = Card3 then
       Card.Pick(Card1);
       Card.Pick(Card2);
       Card.Pick(Card3);

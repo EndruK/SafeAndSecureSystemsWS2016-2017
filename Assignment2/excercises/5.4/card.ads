@@ -14,7 +14,6 @@ package Card is
   end record;
   procedure Pick(c : in out Card);
   procedure Print(c : in Card);
-  function Equals(Lhs : in Card; Rhs : in Card) return Boolean;
 private
   procedure Random_Suit(s : out Suit);
   procedure Random_Value(v : out Value);

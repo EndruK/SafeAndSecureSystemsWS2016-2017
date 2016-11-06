@@ -38,13 +38,4 @@ package body Card is
     Value_IO.Put(c.v);
     New_Line;
   end Print;
-
-  function Equals(Lhs : in Card; Rhs : in Card) return Boolean is
-  begin -- Equals
-    if Lhs.v = Rhs.v and Lhs.s = Rhs.s then
-      return True;
-    else
-      return False;
-    end if;
-  end Equals;
 end Card;
