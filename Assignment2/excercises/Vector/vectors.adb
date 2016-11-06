@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 package body Vectors is
     -- Adds two vectors dimension-wise.
     function "+"(Left: Vector; Right: Vector) return Vector is

@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO, Ada.Float_Text_IO, Vectors;
 use Ada.Text_IO, Ada.Float_Text_IO, Vectors;
 procedure Main is
