@@ -1,18 +1,18 @@
 CC=gcc
 CFLAGS=-I.
 #Dependencies which also have to be compiled
-DEPS=
+DEPS=card.ads
 #SRC = file1.adb file2.adb ...
-SRC = cards.adb
-OUTPUT = cards
+SRC = card_game.adb card.adb
+OUTPUT = card_game
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OUTPUT): $(SRC)
 	gcc -c $^ $(CFLAGS)
-	gnatbind $(OUTPUT)
-	gnatlink $(OUTPUT)
+	# gnatbind $(OUTPUT)
+	# gnatlink $(OUTPUT)
 	gnatmake $(OUTPUT)
 	make clean
 clean:
