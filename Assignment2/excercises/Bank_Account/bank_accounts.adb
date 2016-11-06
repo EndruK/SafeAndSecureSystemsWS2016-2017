@@ -10,18 +10,20 @@ package body bank_accounts is
   -- Deposits Amount at the given Account.
   procedure Deposit(Account: in out Account_Type; Amount: Cents_Type) is
   begin
-    Account.Balance = Account.Balance + Amount;
+    Account.Balance = Get_Balance(Account) + Amount;
   end Deposit;
 
   -- Withdraws Amount from the given Account.
   procedure Withdraw(Account: in out Account_Type; Amount: Cents_Type) is
   begin
-    Account.Balance = Account.Balance - Amount;
+    Account.Balance = Get_Balance(Account) - Amount;
   end Withdraw;
+
   procedure Transfer(From: in out Account_Type;
                      To: in out Account_Type;
                      Amount: in Cents_Type) is
   begin
-    Put("lol"); -- DEBUG
+    To.Balance = Get_Balance(To) + Amount;
+    From.Balance = Get_Balance(From) - Amount;
   end Transfer;
 end bank_accounts;
