@@ -1,10 +1,12 @@
+with Ada.Text_IO, Ada.Float_Text_IO, Ada.Numerics.Elementary_Functions;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Numerics.Elementary_Functions;
 package Vectors is
     type Vector is record
         X: Float := 0.0;
         Y: Float := 0.0;
         Z: Float := 0.0;
     end record;
-    
+
     function "+"(Left: Vector; Right: Vector) return Vector;
     -- Adds two vectors dimension-wise.
     function "-"(Left: Vector; Right: Vector) return Vector;
