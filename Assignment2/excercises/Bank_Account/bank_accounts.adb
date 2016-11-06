@@ -3,9 +3,8 @@ package body bank_accounts is
   -- Pre Check Account
   -- Excistence, valid account_type
   function Get_Balance(Account: Account_Type) return Cents_Type is
-    C : Cents_Type; -- DEBUG
   begin
-    return C; -- DEBUG
+    return Account.Balance;
   end Get_Balance;
 
   -- Deposits Amount at the given Account.
