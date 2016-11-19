@@ -1,4 +1,5 @@
 context with Elections; use Elections;
+        with Ada.Assertions; use Ada.Assertions;
         with Ada.Text_IO; use Ada.Text_IO;
 
 code Ada.Text_IO.Put_Line("Begin testing: ");
@@ -43,6 +44,24 @@ test    Initialize(Num_Voters);
 pass    Num_Total_Voters = Num_Voters and
         Num_Votes_Made = 0 and
         Votes_Distribution = Zero_Votes_Distribution
+
+***** Check Initialize for values out of range +
+define  Except : Boolean := False;
+test    begin
+            Initialize(999999999999999999999);
+        exception
+            when CONSTRAINT_ERROR => Except := True;
+        end;
+pass    Except = True
+
+***** Check Initialize for values out of range -
+define  Except : Boolean := False;
+test    begin
+            Initialize(-1);
+        exception
+            when CONSTRAINT_ERROR => Except := True;
+        end;
+pass    Except = True
 
 (*Test All_Voters_Vote Function*)
 ***** Check if nobody voted
@@ -162,13 +181,18 @@ pass    Num_Votes_Made = 3
         and Votes_Distribution(A) = 3
 
 ***** Check vote limit
+define  Exception_Thrown : Boolean := False;
 prepare Initialize(3);
         Vote_For(A);
         Vote_For(A);
         Vote_For(A);
-test    Vote_For(A);
+test    begin
+            Vote_For(A);
+        exception
+            when Assertion_Error => Exception_Thrown := True;
+        end;
 pass    Num_Votes_Made = 3
-        and Votes_Distribution(A) = 3
+        and Exception_Thrown = True
 
 (*Testing Finding_Winner Function*)
 

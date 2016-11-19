@@ -1,7 +1,7 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
 package Elections is
-    -- pragma Assertion_Policy(Check);
+    pragma Assertion_Policy(Check);
 
     type Party is (None, A, B, C, D);
     type Votes_Array is array(Party) of Natural;
