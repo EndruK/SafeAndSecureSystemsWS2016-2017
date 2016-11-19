@@ -10,3 +10,6 @@
 #ignore .o and .ali
 *.o
 *.ali
+
+#ignore all what is in bin
+bin/*
