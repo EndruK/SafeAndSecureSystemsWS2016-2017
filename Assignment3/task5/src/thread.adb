@@ -1,12 +1,12 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-with Ada.Text_IO; use Ada.Text_IO;
-
-package body thread is
+package body Thread is
     procedure Initialize(S: out State) is
     begin --Initialize
         S := Ready;
     end Initialize;
+
+--------------------------------------------------------------------------------
 
     procedure Do_Action(S: in out State; A: Action) is
     begin --Do_Action

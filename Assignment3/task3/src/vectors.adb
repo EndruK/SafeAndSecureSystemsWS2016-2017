@@ -11,28 +11,28 @@ package body Vectors is
         return Vector'(Left.X + Right.X, Left.Y + Right.Y, Left.Z + Right.Z);
     end "+";
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function "-"(Left: Vector; Right: Vector) return Vector is
     begin
         return Vector'(Left.X - Right.X, Left.Y - Right.Y, Left.Z - Right.Z);
     end "-";
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function "*"(Left: Vector; Right: Float) return Vector is
     begin
         return Vector'(Left.X * Right, Left.Y * Right, Left.Z * Right);
     end "*";
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function "*"(Left: Vector; Right: Vector) return Float is
     begin
         return (Left.X * Right.X) + (Left.Y * Right.Y) + (Left.Z * Right.Z);
     end "*";
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function "="(Left: Vector; Right: Vector) return Boolean is
     begin
@@ -41,7 +41,7 @@ package body Vectors is
             and then (Left.Z = Right.Z);
     end "=";
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function Are_Orthogonal(Left: Vector; Right: Vector) return Boolean is
         Epsilon: constant Float := 0.00001;
@@ -49,7 +49,7 @@ package body Vectors is
         return ((Left * Right) ** 2) < (Epsilon ** 2);
     end Are_Orthogonal;
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function Cross_Product(Left: Vector; Right: Vector) return Vector is
     begin
@@ -60,14 +60,14 @@ package body Vectors is
         );
     end Cross_Product;
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function Distance(Left: Vector; Right: Vector) return Float is
     begin
         return Distance_To_Origin(Left - Right);
     end Distance;
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     function Distance_To_Origin(Item: Vector) return Float is
         use Ada.Numerics.Elementary_Functions;
@@ -75,7 +75,7 @@ package body Vectors is
         return Sqrt(Item.X**2 + Item.Y**2 + Item.Z**2);
     end Distance_To_Origin;
 
-    -- ---------------------------------------------------------------
+--------------------------------------------------------------------------------
 
     procedure Put(Item: Vector) is
         Aft: constant Natural  := Ada.Float_Text_IO.Default_Aft;

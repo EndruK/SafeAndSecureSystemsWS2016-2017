@@ -11,5 +11,4 @@ begin -- Main
     end loop;
     exception
         when Illegal_Transition => null;
-
 end Main;
