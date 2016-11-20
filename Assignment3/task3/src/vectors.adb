@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Numerics.Elementary_Functions;
 with Ada.Float_Text_IO;
 with Ada.Text_IO;

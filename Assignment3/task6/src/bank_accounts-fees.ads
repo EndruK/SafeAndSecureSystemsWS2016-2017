@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Bank_Accounts; use Bank_Accounts;
 package Bank_Accounts.Fees is
     type Fees_Type is new Account_Type with null record;
