@@ -619,10 +619,26 @@ begin  -- unit main block
   declare
     Test_State : State := Ready;
     Test_Action : Action := Wait;
+    Except : Boolean := False;
   begin  -- test case
     Put_Line ("(14)  Do_Action with an invalid Action sets State to None");
+    begin  -- prepare part
+      Initialize(Test_State);
+    exception
+      when Driver_Internals.Program_Terminate =>
+        raise;
+      when E: others =>
+        Driver_Internals.Unexpected_Error := True;
+        Put_Line ("ERROR: exception " & Ada.Exceptions.Exception_Name (E) & " raised in prepare part of test case 14.");
+        raise Driver_Internals.Program_Terminate;
+    end;  -- prepare part
+
     begin  -- test part
-      Do_Action(Test_State, Test_Action);
+      begin
+          Do_Action(Test_State, Test_Action);
+      exception
+          when Illegal_transition => Except := True;
+      end;
       Driver_Internals.Set_Path ("=>");
     exception
       when E: others =>
@@ -631,6 +647,7 @@ begin  -- unit main block
     begin  -- result part
       if Driver_Internals.Path_Was ("=>") then
         if Test_State = None
+           and Except
         then
           Driver_Internals.Test_Case_Passed := True;
           Put_Line ("      ...pass.");
@@ -701,14 +718,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:89 ");
+          Put_Line ("           Script name:'../tests/testscript.ts'; Line:96 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:89 ");
+        Put_Line ("           Script name:'../tests/testscript.ts'; Line:96 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -718,63 +735,6 @@ begin  -- unit main block
       when E: others =>
         Driver_Internals.Unexpected_Error := True;
         Put_Line ("ERROR: exception " & Ada.Exceptions.Exception_Name (E) & " raised in result part of test case 15.");
-        raise Driver_Internals.Program_Terminate;
-    end;  -- result part
-  end;  -- test case
-
-  -- Test Case (16)   Test to get from State None to Stopped
-  declare
-    Test_State : State := Ready;
-    Stop_Action : Action := Stop;
-    Notify_Action : Action := Notify;
-  begin  -- test case
-    Put_Line ("(16)  Test to get from State None to Stopped");
-    begin  -- prepare part
-      Initialize(Test_State);
-      Do_Action(Test_State, Notify_Action);
-      Initialize(Test_State);
-    exception
-      when Driver_Internals.Program_Terminate =>
-        raise;
-      when E: others =>
-        Driver_Internals.Unexpected_Error := True;
-        Put_Line ("ERROR: exception " & Ada.Exceptions.Exception_Name (E) & " raised in prepare part of test case 16.");
-        raise Driver_Internals.Program_Terminate;
-    end;  -- prepare part
-
-    begin  -- test part
-      Do_Action(Test_State, Stop_Action);
-      Driver_Internals.Set_Path ("=>");
-    exception
-      when E: others =>
-        Driver_Internals.Set_Path (Ada.Exceptions.Exception_Name (E));
-    end;  -- test part
-    begin  -- result part
-      if Driver_Internals.Path_Was ("=>") then
-        if Test_State = Stopped
-        then
-          Driver_Internals.Test_Case_Passed := True;
-          Put_Line ("      ...pass.");
-        else
-          Driver_Internals.Test_Case_Passed := False;
-          Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:106 ");
-          Put_Line ("      ...FAIL.");
-          Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
-        end if;
-      else
-        Driver_Internals.Test_Case_Passed := False;
-        Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:106 ");
-        Put_Line ("      ...FAIL.");
-        Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
-      end if;
-    exception
-      when Driver_Internals.Program_Terminate =>
-        raise;
-      when E: others =>
-        Driver_Internals.Unexpected_Error := True;
-        Put_Line ("ERROR: exception " & Ada.Exceptions.Exception_Name (E) & " raised in result part of test case 16.");
         raise Driver_Internals.Program_Terminate;
     end;  -- result part
   end;  -- test case
