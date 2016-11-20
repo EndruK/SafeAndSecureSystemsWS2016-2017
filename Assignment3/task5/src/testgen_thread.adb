@@ -3,8 +3,8 @@
 
   -- Test Driver Source
 
-  -- File:       /home/darlokh/uni/safe_and_secure/Assignment3/task5/src/testgen_tests.adb
-  -- Script:     /home/darlokh/uni/safe_and_secure/Assignment3/task5/src/../tests/testscript.ts
+  -- File:       /home/darlokh/uni/safe_and_secure/Assignment3/task5/src/testgen_thread.adb
+  -- Script:     /home/darlokh/uni/safe_and_secure/Assignment3/task5/src/../tests/testgen_thread.ts
 
 
 with Ada.Command_Line, Ada.Exceptions;
@@ -14,7 +14,7 @@ with Thread; use Thread;
 with Ada.Assertions; use Ada.Assertions;
 with Ada.Text_IO; use Ada.Text_IO;
 
-procedure testgen_tests is
+procedure testgen_thread is
 
   package Driver_Internals is
     -- Global Data
@@ -83,14 +83,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:9 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:9 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:9 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:9 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -125,14 +125,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:14 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:14 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:14 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:14 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -167,14 +167,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:19 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:19 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:19 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:19 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -209,14 +209,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:24 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:24 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:24 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:24 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -251,14 +251,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:29 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:29 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:29 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:29 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -293,14 +293,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:34 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:34 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:34 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:34 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -336,14 +336,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:41 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:41 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:41 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:41 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -379,14 +379,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:47 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:47 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:47 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:47 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -422,14 +422,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:53 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:53 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:53 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:53 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -465,14 +465,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:59 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:59 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:59 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:59 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -508,14 +508,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:65 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:65 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:65 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:65 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -551,14 +551,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:71 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:71 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:71 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:71 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -594,14 +594,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:77 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:77 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:77 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:77 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -615,13 +615,13 @@ begin  -- unit main block
     end;  -- result part
   end;  -- test case
 
-  -- Test Case (14)   Do_Action with an invalid Action sets State to None
+  -- Test Case (14)   Do_Action with an invalid Action sets State to None and throws an exception
   declare
     Test_State : State := Ready;
     Test_Action : Action := Wait;
     Except : Boolean := False;
   begin  -- test case
-    Put_Line ("(14)  Do_Action with an invalid Action sets State to None");
+    Put_Line ("(14)  Do_Action with an invalid Action sets State to None and throws an exception");
     begin  -- prepare part
       Initialize(Test_State);
     exception
@@ -654,14 +654,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:83 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:83 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:83 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:83 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -718,14 +718,14 @@ begin  -- unit main block
         else
           Driver_Internals.Test_Case_Passed := False;
           Driver_Internals.Fail_Result := True;
-          Put_Line ("           Script name:'../tests/testscript.ts'; Line:96 ");
+          Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:96 ");
           Put_Line ("      ...FAIL.");
           Put_Line ("         (" & "path `=>' was taken, but predicate is FALSE" & ")");
         end if;
       else
         Driver_Internals.Test_Case_Passed := False;
         Driver_Internals.Fail_Result := True;
-        Put_Line ("           Script name:'../tests/testscript.ts'; Line:96 ");
+        Put_Line ("           Script name:'../tests/testgen_thread.ts'; Line:96 ");
         Put_Line ("      ...FAIL.");
         Put_Line ("         (" & "path `" & Driver_Internals.Taken_Path & "' when `=>' was expected" & ")");
       end if;
@@ -746,7 +746,7 @@ begin  -- unit main block
 
   --  End of test cases
   New_Line;
-  Put ("Script name '../tests/testscript.ts'");
+  Put ("Script name '../tests/testgen_thread.ts'");
   Put ("; total test result: ");
   if Driver_Internals.Fail_Result then
     Put ("FAIL");
@@ -786,4 +786,4 @@ exception
     Driver_Internals.Status := -1;
     Ada.Command_Line.Set_Exit_Status (Driver_Internals.Status);
 
-end testgen_tests;
+end testgen_thread;

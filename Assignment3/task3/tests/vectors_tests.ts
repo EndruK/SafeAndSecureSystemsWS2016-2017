@@ -1,5 +1,3 @@
--- André Karge 110033
--- K. Gerrit Lünsdorf 100141
 context with Vectors; use Vectors;
         with Ada.Text_IO; use Ada.Text_IO;
 

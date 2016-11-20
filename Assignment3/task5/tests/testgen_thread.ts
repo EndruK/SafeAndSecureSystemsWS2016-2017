@@ -1,11 +1,9 @@
--- André Karge 110033
--- K. Gerrit Lünsdorf 100141
 context with Thread; use Thread;
         with Ada.Assertions; use Ada.Assertions;
         with Ada.Text_IO; use Ada.Text_IO;
 
 code Ada.Text_IO.Put_Line("Begin testing: ");
-Illegal_Transition
+
 (*Test the Initialize Procedure*)
 
 ***** Initialize Thread sets None to Ready
