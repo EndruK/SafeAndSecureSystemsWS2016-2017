@@ -1,0 +1,20 @@
+[GENERATED OBJECT FILE]
+b__testgen.o
+[PROJECT FILES]
+/home/andre/Programming/ada/Assignment3/task3/testgen.gpr
+20161120113518
+[BOUND OBJECT FILES]
+/home/andre/Programming/ada/Assignment3/task3/bin/vectors.o
+/home/andre/Programming/ada/Assignment3/task3/bin/testgen.o
+[GENERATED SOURCE FILES]
+b__testgen.ads
+b__testgen.adb
+b__testgen.ali
+[RESULTING OPTIONS]
+-L/home/andre/Programming/ada/Assignment3/task3/bin/
+-L/home/andre/Programming/ada/Assignment3/task3/bin/
+-L/opt/gnat/lib/gcc/x86_64-pc-linux-gnu/4.9.4/adalib/
+-static
+-static-libgcc
+/opt/gnat/lib/gcc/x86_64-pc-linux-gnu/4.9.4/adalib/libgnat.a
+-ldl
