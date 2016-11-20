@@ -1,6 +1,8 @@
 project task6 is
 
-   for Main use ("testgen_tests.adb");
+   for Main use ("testgen_bank_accounts.adb",
+                 "testgen_bank_overdrawable.adb",
+                 "testgen_bank_fees.adb");
    for Source_Dirs use ("src", "tests");
    for Object_Dir use "bin";
 

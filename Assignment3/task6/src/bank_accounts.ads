@@ -6,6 +6,9 @@ package Bank_Accounts is
 
     type Account_Type is tagged limited private;
 
+    Overspent_Exception : exception;
+    Invalid_Amount_Exception : exception;
+
     function Get_Balance(Account: Account_Type) return Cents_Type;
     -- Returns the current Balance from Account.
     procedure Deposit(Account: in out Account_Type; Amount: Cents_Type);
@@ -20,6 +23,6 @@ private
     -- limited means that derived types cannot be assigned to each other
     -- tagged means that the type is allowed to be extended later
     type Account_Type is tagged limited record
-        Balance: Cents_Type;
+        Balance: Cents_Type := Default_Balance;
     end record;
 end Bank_Accounts;
