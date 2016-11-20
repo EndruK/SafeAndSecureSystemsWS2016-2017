@@ -17,6 +17,7 @@ package body thread is
                     Put_Line("Action was Start.");
                     S := Running;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Ready.");
                 end if;
             when Stop =>
@@ -24,6 +25,7 @@ package body thread is
                     Put_Line("Action was Stop.");
                     S := Stopped;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Ready nor Running.");
                 end if;
             when Notify =>
@@ -31,6 +33,7 @@ package body thread is
                     Put_Line("Action was Notify.");
                     S := Running;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Waiting.");
                 end if;
             when Wait =>
@@ -38,6 +41,7 @@ package body thread is
                     Put_Line("Action was Wait.");
                     S := Waiting;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Running.");
                 end if;
             when Resume =>
@@ -45,6 +49,7 @@ package body thread is
                     Put_Line("Action was Resume.");
                     S := Running;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Sleeping.");
                 end if;
             when Sleep =>
@@ -52,10 +57,9 @@ package body thread is
                     Put_Line("Action was Sleep.");
                     S := Sleeping;
                 else
+                    S := None;
                     Put_Line("FAILED! State was not Running.");
                 end if;
-            -- when others =>
-                -- Put_Line("Something unexpected happened.");
         end case;
     end Do_Action;
 end Thread;
