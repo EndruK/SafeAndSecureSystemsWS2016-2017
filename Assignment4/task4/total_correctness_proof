@@ -10,13 +10,18 @@
                 or (X = Y'Old and Y = X'Old)
             ) is
     begin
-        X := Natural(Unsigned(X) xor Unsigned(Y)); -- 1.
-        Y := Natural(Unsigned(X) xor Unsigned(Y)); -- 2.
-        X := Natural(Unsigned(X) xor Unsigned(Y)); -- 3.
+        X := Natural(Unsigned(X) xor Unsigned(Y));
+        Y := Natural(Unsigned(X) xor Unsigned(Y));
+        X := Natural(Unsigned(X) xor Unsigned(Y));
     end S;
 
-
+--------------------------------------------------------------------------------
 c)  Thesis for Procedure S:
+
+    1. === X := Natural(Unsigned(X) xor Unsigned(Y));
+    2. === Y := Natural(Unsigned(X) xor Unsigned(Y));
+    3. === X := Natural(Unsigned(X) xor Unsigned(Y));
+
     1.: [X = X'Old and Y = Y'Old]           X := X xor Y; [X = X'Old xor Y'Old and Y = Y'Old] -- Assignment
     2.: [X = X'Old xor Y'Old and Y = Y'Old] Y := X xor Y; [X = X'Old xor Y'Old and Y = X'Old] -- Assignment
     3.: [X = X'Old xor Y'Old and Y = X'Old] X := X xor Y; [X = Y'Old and Y = X'Old]           -- Assignment
@@ -82,23 +87,30 @@ Procedure S, proof 1. with Rule Assignment:
                 or (Z = X'Old and Y = Y'Old and X = Z'Old)
             ) is
     begin
-        if X > Y then -- 4.
+        if X > Y then
             S(X, Y);
         end if;
 
-        if Y > Z then -- 5.
+        if Y > Z then
             S(Y, Z);
         end if;
 
-        if X > Y then -- 6.
+        if X > Y then
             S(X, Y);
         end if;
     end T;
 
+--------------------------------------------------------------------------------
 c)  Thesis for Procedure T:
     Define Permutation := (X, Y, Z) is Permutation(X'Old, Y'Old, Z'Old)
 
-    Thesis for 4. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+    4. === if X > Y then S(X, Y); end if;
+    5. === if Y > Z then S(Y, Z); end if;
+    6. === if X > Y then S(X, Y); end if;
+
+   ####################################################################################
+   #Thesis for 4. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:#
+   ####################################################################################
     C1 := X > Y --Condition1
 
     precondition: [Permutation]
@@ -106,8 +118,7 @@ c)  Thesis for Procedure T:
         [C1 and Permutation] S(X, Y); [X <= Y and Permutation]
     postcondition: [X <= Y and Permutation]
 
-
-    IF-THEN-ELSE:
+    Use IF-THEN-ELSE:
            {P, B} S1 {Q}, {P, not B} S2 {Q}
         ======================================
         {P} if B then S1; else S2; end if; {Q}
@@ -117,7 +128,7 @@ c)  Thesis for Procedure T:
         not B === not C1
            S1 === S(X, Y);
            S2 === null;
-            Q === X <= Y;
+            Q === Permutation and X <= Y;
 
     Use Empty Statement to proof {P, not B} S2 {Q}:
             True
@@ -157,12 +168,12 @@ c)  Thesis for Procedure T:
             v    === (X, Y)
     P[Expr -> v] === (X, Y) = (X, Y) and X <= Y and Permutation
 
-    Using proof of Procedure S() the Assignment is proofen.
+    Using proof of Procedure S() the Assignment is proofen which proofs the B-case of the IF-THEN-ELSE.
 
 
-    Conclusion: [X <= Y and Permutation]
-
-    Thesis for 5. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+   ####################################################################################
+   #Thesis for 5. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:#
+   ####################################################################################
     C2 := Y > Z --Condition2
 
     precondition: [X <= Y and Permutation] -- Rules: IF-THEN-ELSE, Assignment, Empty Statement, Conclusion
@@ -196,7 +207,7 @@ c)  Thesis for Procedure T:
 
         S2 === null;
         P1 === P and not B = X <= Y and Permutation and not C2
-        P2 === Q = X <= Z and Y <= Z Permutation
+        P2 === Q = X <= Z and Y <= Z and Permutation
         P  === P1 = P2
 
         P1 is not equal to P2 but they need to be.
@@ -246,8 +257,12 @@ c)  Thesis for Procedure T:
 
     Using the proof of Procedure S() the Assignment is proofen which proofs the Conclusion which proofs the B-case of the IF-THEN-ELSE.
 
-    Thesis for 6. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+
+   ####################################################################################
+   #Thesis for 6. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:#
+   ####################################################################################
     C3 := X > Y --Condition3
+
     precondition: [X <= Z and Y <= Z and Permutation] -- Rules: IF-THEN-ELSE, Assignment, Empty Statement, Conclusion
         [not C3 and X <= Z and Y <= Z and Permutation] null; [X <= Y and Y <= Z and X <= Z and Permutation]
             [not C3 and X <= Z and Y <= Z and Permutation] ==> [X <= Y and Y <= Z and X <= Z and Permutation] -- Conclusion
