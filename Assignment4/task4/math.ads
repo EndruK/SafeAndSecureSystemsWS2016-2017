@@ -11,7 +11,15 @@ package body Math is
 
     -- precondition(implicit) := X, Y >= 0 and X, Y <= Natural'Last
     -- postcondition := X = Y'Old and Y = X'Old and (X, Y) is Permutation(X'Old, Y'Old)
-    Procedure S(X: in out Natural; Y: in out Natural) is
+    Procedure S(X: in out Natural; Y: in out Natural) with
+        Pre => X >= 0
+            and Y >= 0
+            and X <= Natural'Last
+            and Y <= Natural'Last,
+        Post => X = Y'Old and Y = X'Old
+            and (  (X = X'Old and Y = Y'Old)
+                or (X = Y'Old and Y = X'Old)
+            ) is
     -- X and Y are Natural -> 2**31 - 1
     begin -- def(X, Y);
         X := Natural(Unsigned(X) xor Unsigned(Y)); -- c-use(X, Y); def(X);
@@ -47,9 +55,13 @@ IF-THEN-ELSE{
     precondition: [Permutation]
         [not C1] null; [X <= Y]{
             Conclusion and Empty Statement
+            {x > y} null; {x <= y}
+                not x > y ==> y <= x
         }
         [C1] S; [X <= Y]{
-            Assignment and Conclusion
+            Assignment -- ich glaub ohne conclusion hier, da S() das Assignment durchfuehrt und fertig -- and Conclusion
+            {x > y} S; {x <= y}
+                S(X,Y) => X=Y, Y=X => x<=y
         }
     postcondition: [X <= Y and Permutation]
 }
