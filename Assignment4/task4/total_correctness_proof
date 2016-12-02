@@ -1,0 +1,262 @@
+    type Unsigned is mod 2**(Integer'Size);
+
+    Procedure S(X: in out Natural; Y: in out Natural) with
+        Pre => X >= 0
+            and Y >= 0
+            and X <= Natural'Last
+            and Y <= Natural'Last,
+        Post => X = Y'Old and Y = X'Old
+            and (  (X = X'Old and Y = Y'Old)
+                or (X = Y'Old and Y = X'Old)
+            ) is
+    begin
+        X := Natural(Unsigned(X) xor Unsigned(Y)); -- 1.
+        Y := Natural(Unsigned(X) xor Unsigned(Y)); -- 2.
+        X := Natural(Unsigned(X) xor Unsigned(Y)); -- 3.
+    end S;
+
+
+c)  Thesis for Procedure S:
+    1.: [X = X'Old and Y = Y'Old]           X := X xor Y; [X = X'Old xor Y'Old and Y = Y'Old] -- Assignment
+    2.: [X = X'Old xor Y'Old and Y = Y'Old] Y := X xor Y; [X = X'Old xor Y'Old and Y = X'Old] -- Assignment
+    3.: [X = X'Old xor Y'Old and Y = X'Old] X := X xor Y; [X = Y'Old and Y = X'Old]           -- Assignment
+
+    Conclusion: [X = X'Old and Y = Y'Old] S; [X = Y'Old and Y = X'Old]
+
+
+
+Procedure S, proof 1. with Rule Assignment:
+
+    Assignment:
+                    True
+        ===========================
+        {P[Expr->v]} v := Expr; {P}
+
+            P    === X = X'Old xor Y'Old and Y = Y'Old
+            Expr === X xor Y;                           -- same as X'Old xor Y'Old
+            v    === X
+    P[Expr -> v] === X = X'Old and Y = Y'Old
+
+    [X = X'Old and Y = Y'Old] X := X xor Y; [X = X'Old xor Y'Old and Y = Y'Old]
+
+
+    Procedure S, proof 2. with Rule Assignment:
+
+    Assignment:
+                    True
+        ===========================
+        {P[Expr->v]} v := Expr; {P}
+
+            P    === X = X'Old xor Y'Old and Y = X'Old  -- Y = X'Old xor Y'Old xor Y'Old = X'Old
+            Expr === X xor Y;                           -- same as X'Old xor Y'Old xor Y'Old
+            v    === Y
+    P[Expr -> v] === X = X'Old xor Y'Old and Y = Y'Old
+
+    [X = X'Old xor Y'Old and Y = Y'Old] Y := X xor Y; [X = X'Old xor Y'Old and Y = X'Old]
+
+
+    Procedure S, proof 3. with Rule Assignment:
+
+    Assignment:
+                    True
+        ===========================
+        {P[Expr->v]} v := Expr; {P}
+
+            P    === X = Y'Old and Y = X'Old            -- Y = X'Old xor Y'Old xor Y'Old = X'Old
+            Expr === X xor Y;                           -- same as X'Old xor Y'Old xor X'Old xor Y'Old xor Y'Old
+            v    === X
+    P[Expr -> v] === X = X'Old xor Y'Old and Y = X'Old
+
+    [X = X'Old xor Y'Old and Y = X'Old] X := X xor Y; [X = Y'Old and Y = X'Old]
+
+================================================================================
+
+    Procedure T(X: in out Natural; Y: in out Natural; Z: in out Natural) with
+        Pre => X, Y, Z >= 0 and X, Y, Z <= Natural'Last
+        Post => X <= Y <= Z
+            and (  (X = X'Old and Y = Y'Old and Z = Z'Old)
+                or (X = X'Old and Z = Y'Old and Y = Z'Old)
+                or (Y = X'Old and X = Y'Old and Z = Z'Old)
+                or (Y = X'Old and Z = Y'Old and X = Z'Old)
+                or (Z = X'Old and X = Y'Old and Y = Z'Old)
+                or (Z = X'Old and Y = Y'Old and X = Z'Old)
+            ) is
+    begin
+        if X > Y then -- 4.
+            S(X, Y);
+        end if;
+
+        if Y > Z then -- 5.
+            S(Y, Z);
+        end if;
+
+        if X > Y then -- 6.
+            S(X, Y);
+        end if;
+    end T;
+
+c)  Thesis for Procedure T:
+    Define Permutation := (X, Y, Z) is Permutation(X'Old, Y'Old, Z'Old)
+
+    Thesis for 4. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+    C1 := X > Y --Condition1
+
+    precondition: [Permutation]
+        [not C1 and Permutation] null; [X <= Y and Permutation]
+        [C1 and Permutation] S(X, Y); [X <= Y and Permutation]
+    postcondition: [X <= Y and Permutation]
+
+
+    IF-THEN-ELSE:
+           {P, B} S1 {Q}, {P, not B} S2 {Q}
+        ======================================
+        {P} if B then S1; else S2; end if; {Q}
+
+            P === Permutation
+            B === C1
+        not B === not C1
+           S1 === S(X, Y);
+           S2 === null;
+            Q === X <= Y;
+
+    Use Empty Statement to proof {P, not B} S2 {Q}:
+            True
+        =============
+        {P} null; {P}
+
+        S2 === null;
+        P1 === P and not B = Permutation and not C1
+        P2 === Q = Permutation and X <= Y
+        P  === P1 = P2
+
+        P1 is not equal to P2 but they need to be.
+
+    Use Conclusion to proof that P1 and P2 are equal:
+        P => P', {P'} S {Q'}, Q' => Q
+        =============================
+                  {P} S {Q}
+
+        P  === P1 = Permutation and not X > Y
+        P' === P2 = Permutation and X <= Y
+        Q' === P2 = Permutation and X <= Y
+        Q  === P2 = Permutation and X <= Y
+        S  === S  = null;
+
+        Proofing that 'not X > Y is equal to X <= Y' is trivial.
+
+    The Conclusion proofs the Empty Statement which proofs the not B-case of the IF-THEN-ELSE.
+
+    Use Assignment to proof the remaining B-case of the IF-THEN-ELSE:
+    Assignment:
+                        True
+            ===========================
+            {P[Expr->v]} v := Expr; {P}
+
+            P    === X > Y and Permutation
+            Expr === S(X, Y);
+            v    === (X, Y)
+    P[Expr -> v] === (X, Y) = (X, Y) and X <= Y and Permutation
+
+    Using proof of Procedure S() the Assignment is proofen.
+
+
+    Conclusion: [X <= Y and Permutation]
+
+    Thesis for 5. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+    C2 := Y > Z --Condition2
+
+    precondition: [X <= Y and Permutation] -- Rules: IF-THEN-ELSE, Assignment, Empty Statement, Conclusion
+    [not C2 and X <= Y and Permutation] null; [X <= Z and Y <= Z and Permutation] -- Empty Statement
+        [not C2 and X <= Y and Permutation] ==> [X <= Z and Y <= Z and Permutation] -- Conclusion
+            [Y <= Z and X <= Y and Permutation] ==> [X <= Z and Y <= Z and Permutation] -- Trivial
+    [C2 and X <= Y and Permutation] S; [X <= Z and Y <= Z and Permutation] -- Conclusion
+        [Y > Z and X <= Y and Permutation] S(Y, Z); [X <= Z and Y <= Z and Permutation] -- Conclusion, Assignment
+                P = P' := Y > Z and X <= Y and Permutation
+                    Q' := Z > Y and X <= Z and Permutation  -- Assignment: {P'}S;{Q'} -> Conclusion {P}S;{Q}
+                    Q := X <= Z and Y <= Z and Permutation
+    postcondition: [X <= Z and Y <= Z and Permutation]
+
+    IF-THEN-ELSE:
+               {P, B} S1 {Q}, {P, not B} S2 {Q}
+            ======================================
+            {P} if B then S1; else S2; end if; {Q}
+
+            P === X <= Y and Permutation
+            B === C2
+        not B === not C2
+           S1 === S(Y, Z);
+           S2 === null;
+            Q === X <= Z and Y <= Z and Permutation;
+
+    Use Empty Statement to proof {P, not B} S2 {Q}:
+    Empty Statement:
+                True
+            =============
+            {P} null; {P}
+
+        S2 === null;
+        P1 === P and not B = X <= Y and Permutation and not C2
+        P2 === Q = X <= Z and Y <= Z Permutation
+        P  === P1 = P2
+
+        P1 is not equal to P2 but they need to be.
+
+    Use Conclusion to proof that P1 and P2 are equal:
+    Conclusion:
+            P => P', {P'} S {Q'}, Q' => Q
+            =============================
+                      {P} S {Q}
+
+        P  === P1 = Permutation and not Y > Z and X <= Y
+        P' === P2 = Permutation and Y <= Z and X <= Y
+        Q' === P2 = Permutation and Y <= Z and X <= Z
+        Q  === P2 = Permutation and Y <= Z and X <= Z
+        S  === S  = null;
+
+        Proofing that 'not Y > Z is equal to Y <= Z' is trivial.
+        Due to the transitivity it is trivial to proof 'X <= Z and Y <= Z'.
+
+    The Conclusion proofs the Empty Statement which proofs the not B-case of the IF-THEN-ELSE.
+
+    Use Conclusion to proof the remaining B-case of the IF-THEN-ELSE:
+    Conclusion:
+            P => P', {P'} S {Q'}, Q' => Q
+            =============================
+                      {P} S {Q}
+
+        P  === P1 = Permutation and Y > Z and X <= Y
+        P' === P2 = Permutation and Y > Z and X <= Y
+        Q' === P2 = Permutation and Z > Y and X <= Z
+        Q  === P2 = Permutation and Y <= Z and X <= Z
+        S  === S  = S(Y, Z);
+
+    Use Assignment to proof {P'} S {Q'}:
+    Assignment:
+                        True
+            ===========================
+            {P[Expr->v]} v := Expr; {P}
+
+            P    === Permutation and Y > Z and X <= Y
+            Expr === S(Y, Z);
+            v    === (Y, Z)
+    P[Expr -> v] === (Y, Z) = (Y, Z) and Y <= Z and Permutation
+
+        Using proof of Procedure S() the Assignment is proofen.
+        Due to the transitivity it is trivial to proof that 'X <= Z and Y <= Z' is equal to 'Z > Y and X <= Z'.
+
+    Using the proof of Procedure S() the Assignment is proofen which proofs the Conclusion which proofs the B-case of the IF-THEN-ELSE.
+
+    Thesis for 6. with Rules IF-THEN-ELSE, Assignment, Empty Statement and Conclusion:
+    C3 := X > Y --Condition3
+    precondition: [X <= Z and Y <= Z and Permutation] -- Rules: IF-THEN-ELSE, Assignment, Empty Statement, Conclusion
+        [not C3 and X <= Z and Y <= Z and Permutation] null; [X <= Y and Y <= Z and X <= Z and Permutation]
+            [not C3 and X <= Z and Y <= Z and Permutation] ==> [X <= Y and Y <= Z and X <= Z and Permutation] -- Conclusion
+                [X <= Y and X <= Z and Y <= Z and Permutation] ==> [X <= Y and X <= Z and Y <= Z and Permutation] -- Trivial
+        [C3 and X <= Z and Y <= Z and Permutation] S; [X <= Y and Y <= Z and X <= Z and Permutation]
+            [X > Y and X <= Z and Y <= Z and Permutation] S(Y, Z); [X <= Y and X <= Z and Y <= Z and Permutation] -- Conclusion, Assignment
+                    P = P' := X > Y and X <= Z and Y <= Z and Permutation
+                        Q' := Y > X and X <= Z and Y <= Z and Permutation  -- Assignment: {P'}S;{Q'} -> Conclusion {P}S;{Q}
+                        Q := X <= Y and X <= Z and Y <= Z and Permutation
+    postcondition: [X <= Y and Y <= Z and X <= Z and Permutation]
+
+    Is proofen like Thesis 5.
