@@ -86,10 +86,10 @@ Use While to prove 1., 2. and 3.:
         ===========================
         {P[Expr->v]} v := Expr; {P}
 
-            P    === I >= 0 and I <= N'Old
+            P    === I >= 1 and I <= N'Old
             Expr === I := I + 1;
             v    === I
-    P[Expr -> v] === I >= 1 and I <= N'Old
+    P[Expr -> v] === I >= 0 and I <= N'Old
 
     [I >= 0 and I <= N'Old] I := I + 1; [I >= 1 and I <= N'Old]
 
@@ -103,9 +103,9 @@ Use While to prove 1., 2. and 3.:
         ===========================
         {P[Expr->v]} v := Expr; {P}
 
-            P    === X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old
+            P    === X >= 1 and X <= Natural'Last
             Expr === X := X * I;
             v    === X
-    P[Expr -> v] === X >= 1 and X <= Natural'Last
+    P[Expr -> v] === X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old
 
     [X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old] X := X * I; [X >= 1 and X <= Natural'Last]
