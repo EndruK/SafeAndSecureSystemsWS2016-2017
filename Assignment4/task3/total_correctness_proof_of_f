@@ -1,9 +1,9 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
 
--- F(N) calculates N!
+-- F(N) calculates the factorial of N
 function F(N: Natural) return Natural with
-    Pre =>  N >= 0 and N <= Natural'Last,
+    Pre =>  N >= 0 and N <= 12, -- due to the fact that 13! exceeds 2**Natural'Size
     Post => X >= 1 and X <= Natural'Last
             and I = N
 is
@@ -18,37 +18,43 @@ begin --def(N)
     return X; -- c-use(X)
 end F;
 
-================================================================================
+--------------------------------------------------------------------------------
 
-While:
+Proof for Procedure F:
+    1. Prooving that the Invariant holds before the loop. -- While
+    2. Prooving that the Invariant remains intact under iteration of the loop body. -- While
+    3. Prooving that the Invariant and the postcondition are holding at loop termination. -- While
+
+Use While to proove 1., 2. and 3.:
+    While:
                         {P, B} S {Q}
         ==========================================
          {P} while B loop S; end loop; {Q, not B}
 
-        P === N >= 0 and N <= Natural'Last
+        P === N >= 0 and N <= 12
         B === I < N
     not B === I >= N -- trivial to proove
         S === I := I + 1; X := X * I;
         Q === X >= 1 and X <= Natural'Last and I = N
 
-    {Pre => N >= 0 and N <= Natural'Last,
-    Post => X >= 1 and X <= Natural'Last and I = N = N'Old}
+    {Pre => N >= 0 and N <= 12,
+    Post => X >= 1 and X <= Natural'Last and I = N'Old and N = N'Old}
 
     {variant: N - I}
     {invariant: X = I!}
-    while I < N loop -- p-use(N), p-use(I)
-        I := I + 1; -- c-use(I), def(I)
-        X := X * I; -- c-use(X), c-use(I), def(X)
+    while I < N loop
+        I := I + 1;
+        X := X * I;
     {invariant: X = I!}
     end loop;
 
-    prooving that the invariant is fulfilled before loop-execution:
+    prooving 1.:
         invariant === X = I!
         X := 1; I:= 0;
         1 = 0!
         X = 1 = 0! = I!
 
-    prooving {invariant and B} S {Q}:
+    prooving 2. and 3.:
         invariant === X = I!
         B === I < N
         S === I := I + 1; X := X * I;
@@ -66,11 +72,3 @@ While:
         --          the variant (N - I) is decreasing per loop iteration.
         --          The loop holds when I < N is not fulfilled, meaning when I
         --          is equal to N.
-
-
-    prooving that the invariant remains intact under iteration of the loop body:
-        X = I! and I < N ==> weakest precondition( S(
-                                                        I := I + 1;
-                                                        X := X * I;
-                                                    )
-                                                    , X = I!)
