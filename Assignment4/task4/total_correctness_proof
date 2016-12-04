@@ -274,4 +274,4 @@ c)  Thesis for Procedure T:
                         Q := X <= Y and X <= Z and Y <= Z and Permutation
     postcondition: [X <= Y and Y <= Z and X <= Z and Permutation]
 
-    Is proofen like Thesis 5.
+    Is prooven like Thesis 5.
