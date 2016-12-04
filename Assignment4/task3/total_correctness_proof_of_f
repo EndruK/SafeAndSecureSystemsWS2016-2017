@@ -24,6 +24,8 @@ Proof for Procedure F:
     1. Proving that the Invariant holds before the loop. -- While
     2. Proving that the Invariant remains intact under iteration of the loop body. -- While
     3. Proving that the Invariant and the postcondition are holding at loop termination. -- While
+    4. === I := I + 1;
+    5. === X := X * I;
 
 Use While to prove 1., 2. and 3.:
     While:
@@ -64,7 +66,7 @@ Use While to prove 1., 2. and 3.:
 
         -- Invariant: X = I!
         while I < N loop
-            -- Invariant: X * (I + 1) = (I + 1)! and I < N
+            -- Invariant: X * (I + 1) = (I + 1)! and I <= N
             I := I + 1;
             -- Invariant: X * I = I!
             X := X * I;
@@ -73,5 +75,37 @@ Use While to prove 1., 2. and 3.:
         -- Invariant: X = I! and I = N
         -- Variant: N - I, I is incremented by 1 per loop iteration, therefore
         --          the variant (N - I) is decreasing per loop iteration.
-        --          The loop holds when I < N is not fulfilled, meaning when I
-        --          is equal to N.
+        --          The loop holds when I < N is not fulfilled, meaning I = N.
+
+    Thesis for 4.:
+        [I >= 0 and I <= N'Old] I := I + 1; [I >= 1 and I <= N'Old] -- Assignment
+
+    Proving 4. using Rule Assignment:
+    Assignment:
+                    True
+        ===========================
+        {P[Expr->v]} v := Expr; {P}
+
+            P    === I >= 0 and I <= N'Old
+            Expr === I := I + 1;
+            v    === I
+    P[Expr -> v] === I >= 1 and I <= N'Old
+
+    [I >= 0 and I <= N'Old] I := I + 1; [I >= 1 and I <= N'Old]
+
+
+    Thesis for 5.:
+        [X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old] X := X * I; [X >= 1 and X <= Natural'Last] -- Assignment
+
+    Proving 5. using Rule Assignment:
+    Assignment:
+                    True
+        ===========================
+        {P[Expr->v]} v := Expr; {P}
+
+            P    === X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old
+            Expr === X := X * I;
+            v    === X
+    P[Expr -> v] === X >= 1 and X <= Natural'Last
+
+    [X >= 1 and X <= Natural'Last and I >= 1 and I <= N'Old] X := X * I; [X >= 1 and X <= Natural'Last]
