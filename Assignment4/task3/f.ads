@@ -1,6 +1,11 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-function F(N: Natural) return Natural is
+
+-- F(N) calculates N!
+function F(N: Natural) return Natural with
+    Pre =>  N >= 0 and N <= Natural'Last,
+    Post => X >= 1 and X <= Natural'Last
+is
     I: Natural := 0; -- def(I)
     X: Natural := 1; -- def(X)
 begin --def(N)
