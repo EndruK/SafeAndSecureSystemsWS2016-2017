@@ -25,7 +25,7 @@ Proof for Procedure F:
     2. Proving that the Invariant remains intact under iteration of the loop body. -- While
     3. Proving that the Invariant and the postcondition are holding at loop termination. -- While
 
-Use While to proove 1., 2. and 3.:
+Use While to prove 1., 2. and 3.:
     While:
                         {P, B} S {Q}
         ==========================================
@@ -33,7 +33,7 @@ Use While to proove 1., 2. and 3.:
 
         P === N >= 0 and N <= 12
         B === I < N
-    not B === I >= N -- trivial to proove
+    not B === I >= N -- trivial to prove
         S === I := I + 1; X := X * I;
         Q === X >= 1 and X <= Natural'Last and I = N
 
@@ -58,7 +58,7 @@ Use While to proove 1., 2. and 3.:
         invariant === X = I!
         B === I < N
         S === I := I + 1; X := X * I;
-        X := 1; 
+        X := 1;
         I := 0;
         N := N'Old >= 0;
 
