@@ -1,0 +1,76 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
+
+-- F(N) calculates N!
+function F(N: Natural) return Natural with
+    Pre =>  N >= 0 and N <= Natural'Last,
+    Post => X >= 1 and X <= Natural'Last
+            and I = N
+is
+    I: Natural := 0; -- def(I)
+    X: Natural := 1; -- def(X)
+begin --def(N)
+    while I < N loop -- p-use(N), p-use(I)
+        I := I + 1; -- c-use(I), def(I)
+        X := X * I; -- c-use(X), c-use(I), def(X)
+    end loop;
+
+    return X; -- c-use(X)
+end F;
+
+================================================================================
+
+While:
+                        {P, B} S {Q}
+        ==========================================
+         {P} while B loop S; end loop; {Q, not B}
+
+        P === N >= 0 and N <= Natural'Last
+        B === I < N
+    not B === I >= N -- trivial to proove
+        S === I := I + 1; X := X * I;
+        Q === X >= 1 and X <= Natural'Last and I = N
+
+    {Pre => N >= 0 and N <= Natural'Last,
+    Post => X >= 1 and X <= Natural'Last and I = N = N'Old}
+
+    {variant: N - I}
+    {invariant: X = I!}
+    while I < N loop -- p-use(N), p-use(I)
+        I := I + 1; -- c-use(I), def(I)
+        X := X * I; -- c-use(X), c-use(I), def(X)
+    {invariant: X = I!}
+    end loop;
+
+    prooving that the invariant is fulfilled before loop-execution:
+        invariant === X = I!
+        X := 1; I:= 0;
+        1 = 0!
+        X = 1 = 0! = I!
+
+    prooving {invariant and B} S {Q}:
+        invariant === X = I!
+        B === I < N
+        S === I := I + 1; X := X * I;
+        X := 1; I:= 0; N := N'Old >= 0;
+
+            {X = I! and I < N'Old} -- precondition and B
+            I < N'Old
+                -- Invariant: X * (I + 1) = (I + 1)! and I < N'Old
+                I := I + 1;
+                -- Invariant: X * I = I!
+                X := X * I;
+                -- Invariant: X = I!
+            -- Invariant: X = I! and I = N'Old
+        -- Variant: N - I, I is incremented by 1 per loop iteration, therefore
+        --          the variant (N - I) is decreasing per loop iteration.
+        --          The loop holds when I < N is not fulfilled, meaning when I
+        --          is equal to N.
+
+
+    prooving that the invariant remains intact under iteration of the loop body:
+        X = I! and I < N ==> weakest precondition( S(
+                                                        I := I + 1;
+                                                        X := X * I;
+                                                    )
+                                                    , X = I!)
