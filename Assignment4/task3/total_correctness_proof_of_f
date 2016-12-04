@@ -21,9 +21,9 @@ end F;
 --------------------------------------------------------------------------------
 
 Proof for Procedure F:
-    1. Prooving that the Invariant holds before the loop. -- While
-    2. Prooving that the Invariant remains intact under iteration of the loop body. -- While
-    3. Prooving that the Invariant and the postcondition are holding at loop termination. -- While
+    1. Proving that the Invariant holds before the loop. -- While
+    2. Proving that the Invariant remains intact under iteration of the loop body. -- While
+    3. Proving that the Invariant and the postcondition are holding at loop termination. -- While
 
 Use While to proove 1., 2. and 3.:
     While:
@@ -48,26 +48,29 @@ Use While to proove 1., 2. and 3.:
     {invariant: X = I!}
     end loop;
 
-    prooving 1.:
+    Proving 1.:
         invariant === X = I!
         X := 1; I:= 0;
         1 = 0!
         X = 1 = 0! = I!
 
-    prooving 2. and 3.:
+    Proving 2. and 3.:
         invariant === X = I!
         B === I < N
         S === I := I + 1; X := X * I;
-        X := 1; I:= 0; N := N'Old >= 0;
+        X := 1; 
+        I := 0;
+        N := N'Old >= 0;
 
-            {X = I! and I < N'Old} -- precondition and B
-            I < N'Old
-                -- Invariant: X * (I + 1) = (I + 1)! and I < N'Old
-                I := I + 1;
-                -- Invariant: X * I = I!
-                X := X * I;
-                -- Invariant: X = I!
-            -- Invariant: X = I! and I = N'Old
+        -- Invariant: X = I!
+        while I < N loop
+            -- Invariant: X * (I + 1) = (I + 1)! and I < N
+            I := I + 1;
+            -- Invariant: X * I = I!
+            X := X * I;
+            -- Invariant: X = I!
+        end loop;
+        -- Invariant: X = I! and I = N
         -- Variant: N - I, I is incremented by 1 per loop iteration, therefore
         --          the variant (N - I) is decreasing per loop iteration.
         --          The loop holds when I < N is not fulfilled, meaning when I

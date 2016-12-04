@@ -30,7 +30,7 @@ c)  Thesis for Procedure S:
 
 
 
-Procedure S, proof 1. with Rule Assignment:
+Procedure S, prove 1. with Rule Assignment:
 
     Assignment:
                     True
@@ -45,7 +45,7 @@ Procedure S, proof 1. with Rule Assignment:
     [X = X'Old and Y = Y'Old] X := X xor Y; [X = X'Old xor Y'Old and Y = Y'Old]
 
 
-    Procedure S, proof 2. with Rule Assignment:
+    Procedure S, prove 2. with Rule Assignment:
 
     Assignment:
                     True
@@ -60,7 +60,7 @@ Procedure S, proof 1. with Rule Assignment:
     [X = X'Old xor Y'Old and Y = Y'Old] Y := X xor Y; [X = X'Old xor Y'Old and Y = X'Old]
 
 
-    Procedure S, proof 3. with Rule Assignment:
+    Procedure S, prove 3. with Rule Assignment:
 
     Assignment:
                     True
@@ -130,7 +130,7 @@ c)  Thesis for Procedure T:
            S2 === null;
             Q === Permutation and X <= Y;
 
-    Use Empty Statement to proof {P, not B} S2 {Q}:
+    Use Empty Statement to prove {P, not B} S2 {Q}:
             True
         =============
         {P} null; {P}
@@ -142,7 +142,7 @@ c)  Thesis for Procedure T:
 
         P1 is not equal to P2 but they need to be.
 
-    Use Conclusion to proof that P1 and P2 are equal:
+    Use Conclusion to prove that P1 and P2 are equal:
         P => P', {P'} S {Q'}, Q' => Q
         =============================
                   {P} S {Q}
@@ -153,11 +153,11 @@ c)  Thesis for Procedure T:
         Q  === P2 = Permutation and X <= Y
         S  === S  = null;
 
-        Proofing that 'not X > Y is equal to X <= Y' is trivial.
+        proving that 'not X > Y is equal to X <= Y' is trivial.
 
-    The Conclusion proofs the Empty Statement which proofs the not B-case of the IF-THEN-ELSE.
+    The Conclusion proves the Empty Statement which proves the not B-case of the IF-THEN-ELSE.
 
-    Use Assignment to proof the remaining B-case of the IF-THEN-ELSE:
+    Use Assignment to prove the remaining B-case of the IF-THEN-ELSE:
     Assignment:
                         True
             ===========================
@@ -168,7 +168,7 @@ c)  Thesis for Procedure T:
             v    === (X, Y)
     P[Expr -> v] === (X, Y) = (X, Y) and X <= Y and Permutation
 
-    Using proof of Procedure S() the Assignment is proofen which proofs the B-case of the IF-THEN-ELSE.
+    Using the proof of Procedure S() the Assignment is proveen which proves the B-case of the IF-THEN-ELSE.
 
 
    ####################################################################################
@@ -199,7 +199,7 @@ c)  Thesis for Procedure T:
            S2 === null;
             Q === X <= Z and Y <= Z and Permutation;
 
-    Use Empty Statement to proof {P, not B} S2 {Q}:
+    Use Empty Statement to prove {P, not B} S2 {Q}:
     Empty Statement:
                 True
             =============
@@ -212,7 +212,7 @@ c)  Thesis for Procedure T:
 
         P1 is not equal to P2 but they need to be.
 
-    Use Conclusion to proof that P1 and P2 are equal:
+    Use Conclusion to prove that P1 and P2 are equal:
     Conclusion:
             P => P', {P'} S {Q'}, Q' => Q
             =============================
@@ -224,12 +224,12 @@ c)  Thesis for Procedure T:
         Q  === P2 = Permutation and Y <= Z and X <= Z
         S  === S  = null;
 
-        Proofing that 'not Y > Z is equal to Y <= Z' is trivial.
-        Due to the transitivity it is trivial to proof 'X <= Z and Y <= Z'.
+        Proving that 'not Y > Z is equal to Y <= Z' is trivial.
+        Due to the transitivity it is trivial to prove 'X <= Z and Y <= Z'.
 
-    The Conclusion proofs the Empty Statement which proofs the not B-case of the IF-THEN-ELSE.
+    The Conclusion proves the Empty Statement which proves the not B-case of the IF-THEN-ELSE.
 
-    Use Conclusion to proof the remaining B-case of the IF-THEN-ELSE:
+    Use Conclusion to prove the remaining B-case of the IF-THEN-ELSE:
     Conclusion:
             P => P', {P'} S {Q'}, Q' => Q
             =============================
@@ -241,7 +241,7 @@ c)  Thesis for Procedure T:
         Q  === P2 = Permutation and Y <= Z and X <= Z
         S  === S  = S(Y, Z);
 
-    Use Assignment to proof {P'} S {Q'}:
+    Use Assignment to prove {P'} S {Q'}:
     Assignment:
                         True
             ===========================
@@ -252,10 +252,12 @@ c)  Thesis for Procedure T:
             v    === (Y, Z)
     P[Expr -> v] === (Y, Z) = (Y, Z) and Y <= Z and Permutation
 
-        Using proof of Procedure S() the Assignment is proofen.
-        Due to the transitivity it is trivial to proof that 'X <= Z and Y <= Z' is equal to 'Z > Y and X <= Z'.
+        Using proof of Procedure S() the Assignment is proven.
+        Due to the transitivity it is trivial to prove that
+            'X <= Z and Y <= Z' is equal to 'Z > Y and X <= Z'.
 
-    Using the proof of Procedure S() the Assignment is proofen which proofs the Conclusion which proofs the B-case of the IF-THEN-ELSE.
+    The Assignment follows from the proof of Procedure S(), from which the
+    Conclusion follows, which, again, proves case B of the IF-THEN-ELSE statement.
 
 
    ####################################################################################
