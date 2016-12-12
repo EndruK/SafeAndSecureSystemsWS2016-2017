@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 function G(N: Natural; K: Natural) return Natural with
     Pre =>  N >= 0 and N <= Natural'Last
         and K >= 0 and K <= Natural'Last,
