@@ -1,3 +1,7 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
+
+
     type Unsigned is mod 2**(Integer'Size);
 
     Procedure S(X: in out Natural; Y: in out Natural) with
