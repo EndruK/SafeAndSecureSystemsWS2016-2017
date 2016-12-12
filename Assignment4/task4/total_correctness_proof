@@ -168,7 +168,7 @@ c)  Thesis for Procedure T:
             v    === (X, Y)
     P[Expr -> v] === (X, Y) = (X, Y) and X <= Y and Permutation
 
-    Using the proof of Procedure S() the Assignment is proveen which proves the B-case of the IF-THEN-ELSE.
+    Using the proof of Procedure S() the Assignment is proven which proves the B-case of the IF-THEN-ELSE.
 
 
    ####################################################################################
