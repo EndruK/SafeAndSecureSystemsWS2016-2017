@@ -4,7 +4,7 @@ pragma SPARK_Mode(on);
 package body Thread is
     procedure Initialize is
     begin --Initialize
-        S := Ready;
+        Thread.S := Ready;
     end Initialize;
 
 --------------------------------------------------------------------------------
@@ -13,43 +13,43 @@ package body Thread is
     begin --Do_Action
         case A is
             when Start =>
-                if S = Ready then
-                    S := Running;
+                if Thread.S = Ready then
+                    Thread.S := Running;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
             when Stop =>
-                if S = Ready or S = Running then
-                    S := Stopped;
+                if Thread.S = Ready or Thread.S = Running then
+                    Thread.S := Stopped;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
             when Notify =>
-                if S = Waiting then
-                    S := Running;
+                if Thread.S = Waiting then
+                    Thread.S := Running;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
             when Wait =>
-                if S = Running then
-                    S := Waiting;
+                if Thread.S = Running then
+                    Thread.S := Waiting;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
             when Resume =>
-                if S = Sleeping then
-                    S := Running;
+                if Thread.S = Sleeping then
+                    Thread.S := Running;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
             when Sleep =>
-                if S = Running then
-                    S := Sleeping;
+                if Thread.S = Running then
+                    Thread.S := Sleeping;
                 else
-                    S := None;
+                    Thread.S := None;
                 end if;
         end case;
-        -- if S = None then
+        -- if Thread.S = None then
             -- raise Illegal_Transition;
         -- end if;
     end Do_Action;
