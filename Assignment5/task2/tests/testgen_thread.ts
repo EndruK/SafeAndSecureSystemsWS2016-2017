@@ -7,94 +7,81 @@ code Ada.Text_IO.Put_Line("Begin testing: ");
 (*Test the Initialize Procedure*)
 
 ***** Initialize Thread sets None to Ready
-define  Test_State : State := None;
+define  S : State := None;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 ***** Initialize Thread sets Ready to Ready
-define  Test_State : State := Ready;
+define  S : State := Ready;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 ***** Initialize Thread sets Running to Ready
-define  Test_State : State := Running;
+define  S : State := Running;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 ***** Initialize Thread sets Stopped to Ready
-define  Test_State : State := Stopped;
+define  S : State := Stopped;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 ***** Initialize Thread sets Sleeping to Ready
-define  Test_State : State := Sleeping;
+define  S : State := Sleeping;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 ***** Initialize Thread sets Waiting to Ready
-define  Test_State : State := Waiting;
+define  S : State := Waiting;
 test    Initialize;
-pass    Test_State = Ready
+pass    S = Ready
 
 (*Test the Do_Action Procedure*)
 
 ***** Do_Action Stop -> State is Ready, Action is Stop
-define  Test_State : State := Ready;
+define  S : State := Ready;
         Test_Action : Action := Stop;
 test    Do_Action(Test_Action);
-pass    Test_State = Stopped
+pass    S = Stopped
 
 ***** Do_Action Start -> State is Ready, Action is Start
-define  Test_State : State := Ready;
+define  S : State := Ready;
         Test_Action : Action := Start;
 test    Do_Action(Test_Action);
-pass    Test_State = Running
+pass    S = Running
 
 ***** Do_Action Notify -> State is Waiting, Action is Notify
-define  Test_State : State := Waiting;
+define  S : State := Waiting;
         Test_Action : Action := Notify;
 test    Do_Action(Test_Action);
-pass    Test_State = Running
+pass    S = Running
 
 ***** Do_Action Sleep -> State is Running, Action is Sleep
-define  Test_State : State := Running;
+define  S : State := Running;
         Test_Action : Action := Sleep;
 test    Do_Action(Test_Action);
-pass    Test_State = Sleeping
+pass    S = Sleeping
 
 ***** Do_Action Wait -> State is Running, Action is Wait
-define  Test_State : State := Running;
+define  S : State := Running;
         Test_Action : Action := Wait;
 test    Do_Action(Test_Action);
-pass    Test_State = Waiting
+pass    S = Waiting
 
 ***** Do_Action Stop -> State is Running, Action is Stop
-define  Test_State : State := Running;
+define  S : State := Running;
         Test_Action : Action := Stop;
 test    Do_Action(Test_Action);
-pass    Test_State = Stopped
+pass    S = Stopped
 
 ***** Do_Action Resume -> State is Sleeping, Action is Resume
-define  Test_State : State := Sleeping;
+define  S : State := Sleeping;
         Test_Action : Action := Resume;
 test    Do_Action(Test_Action);
-pass    Test_State = Running
-
-***** Do_Action with an invalid Action sets State to None and throws an exception
-define  Test_State : State := Ready;
-        Test_Action : Action := Wait;
-        Except : Boolean := False;
-prepare Initialize;
-test    begin
-            Do_Action(Test_Action);
-        exception
-            when Illegal_transition => Except := True;
-        end;
-pass    Test_State = None
-        and Except
+pass    S = Running
 
 ***** Test an iteration over all States with all Actions
-define  Test_State : State := Ready;
+define  S : State := Ready;
         Start_Action : Action := Start;
         Stop_Action : Action := Stop;
         Notify_Action : Action := Notify;
@@ -108,6 +95,6 @@ prepare Initialize;
         Do_Action(Sleep_Action);
         Do_Action(Resume_Action);
 test    Do_Action(Stop_Action);
-pass    Test_State = Stopped
+pass    S = Stopped
 
 code Ada.Text_IO.Put_Line("End testing");

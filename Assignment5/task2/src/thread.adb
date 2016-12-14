@@ -1,7 +1,7 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-package body Thread with
-    Spark_Mode is
+pragma SPARK_Mode(on);
+package body Thread is
     procedure Initialize is
     begin --Initialize
         S := Ready;

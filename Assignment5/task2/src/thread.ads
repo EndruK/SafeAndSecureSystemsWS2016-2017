@@ -1,7 +1,7 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-package Thread with
-    Spark_Mode is
+pragma SPARK_Mode(on);
+package Thread is
     pragma Assertion_Policy(Check);
 
     type State is (None, Ready, Running, Stopped, Sleeping, Waiting);
