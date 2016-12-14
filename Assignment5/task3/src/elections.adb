@@ -45,6 +45,9 @@ package body Elections is
     begin -- Find_Winner
         -- loop over all parties in the vote distribution
         for P in Votes_Distribution'Range loop
+            pragma Loop_Invariant(Winner in Party);
+            -- invariant muss immer stimmen (vor, während und nach loop)
+            pragma Loop_Variant(Decreases => (Party'Pos(Party'Last) - Party'Pos(P)));
             if Votes_Distribution(P) > highest_vote then
                 -- if the value of the current party is higher
                 -- set the current highest vote and election winner
