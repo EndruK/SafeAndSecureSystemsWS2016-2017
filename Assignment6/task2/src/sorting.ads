@@ -1,6 +1,5 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-
 package Sorting is
     type Natural_Array is array(Natural range <>) of Natural;
 
