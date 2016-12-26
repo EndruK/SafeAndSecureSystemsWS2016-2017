@@ -6,6 +6,6 @@ package Sorting is
 
     procedure Selection_Sort(A: in out Natural_Array) with
         Pre =>  A'Length > 1 and
-                A'Length < Integer'Last - 1,
-        Post => (for all i in 1 .. A'Last - 1 => A(i) <= A(i + 1));
+                A'Length < Integer'Last - 1; --,
+        -- Post => (for all x in A'First .. A'Length - 1 => A(x) <= A(A'Last));
 end Sorting;
