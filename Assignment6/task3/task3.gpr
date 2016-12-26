@@ -7,7 +7,8 @@ project task3 is
    for Object_Dir use "bin";
 
    package Compiler is
-      for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwe",
+      for Default_Switches ("ada") use ("-g", "-gnato",
+                                        --"-gnatwe",
                                         "-gnatwa", "-gnatQ", "-gnato",
                                         "-gnata", "-gnat12");
    end Compiler;
