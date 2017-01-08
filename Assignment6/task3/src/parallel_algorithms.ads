@@ -9,6 +9,8 @@ package Parallel_Algorithms is
 
     -- procedure to calculate the sum of an array
     -- by giving the pointer to the array and a result object
-    procedure Parallel_Sum(Input: Array_Access_Type; Result: out Item_Type);
+    procedure Parallel_Sum(Input : Array_Access_Type;
+                           Result : out Item_Type;
+                           Tasks : in Integer);
 
 end Parallel_Algorithms;
