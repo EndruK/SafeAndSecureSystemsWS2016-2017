@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 context with Parallel_Algorithms;
         with Ada.Assertions; use Ada.Assertions;
         with Ada.Text_IO; use Ada.Text_IO;

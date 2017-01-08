@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 generic
     type Item_Type is private;
     with function "+"(Left: Item_Type; Right: Item_Type) return Item_Type;

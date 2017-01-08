@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 package body Parallel_Algorithms is
     procedure Parallel_Sum(Input: Array_Access_Type;
