@@ -1,3 +1,4 @@
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 package body Parallel_Algorithms is
     procedure Parallel_Sum(Input: Array_Access_Type;
                            Result: out Item_Type;
@@ -36,7 +37,7 @@ package body Parallel_Algorithms is
     begin -- Parallel_Sum
         Full := Integer(Float'Floor(Float(Input'Length) / Float(Tasks)));
         Rest := Input'Length mod Tasks;
-        for c in Elements'Range loop
+        for c in 1..Tasks loop
             if Rest > 0 then
                 Elements(c) := Full + 1;
                 Rest := Rest - 1;
@@ -45,7 +46,7 @@ package body Parallel_Algorithms is
             end if;
         end loop;
         declare
-            Position : Integer := 0;
+            Position : Integer := 1;
         begin
             for c in 1..Tasks loop
                 My_Pool(c).Calc_Sum(Input, Position, Position + Elements(c)-1);
