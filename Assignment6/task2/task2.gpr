@@ -8,7 +8,7 @@ project task2 is
 
    package Compiler is
       for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwe",
-                                        "-gnatwa", "-gnatQ", "-gnato",
+                                        "-gnatwa", "-gnatQ",
                                         "-gnata", "-gnat12");
    end Compiler;
 
