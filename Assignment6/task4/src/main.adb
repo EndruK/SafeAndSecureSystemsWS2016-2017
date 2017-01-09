@@ -9,13 +9,11 @@ procedure Main is
         Put(Item, Width => 0);
     end My_Put;
     package My_Par_Alg is new Parallel_Algorithms(Item_Type => Integer,
-                                                  "=" => "=",
                                                   "<" => "<",
                                                   Put_Item => My_Put);
-    My_Array : My_Par_Alg.Array_Access_Type :=
+    My_Array : constant My_Par_Alg.Array_Access_Type :=
        new My_Par_Alg.Array_Type'(38,27,43,3,9,82,10);
     Sorted_Array : My_Par_Alg.Array_Access_Type;
-    -- Tasks : Integer := 100;
 begin -- Main
     My_Par_Alg.Parallel_Merge_Sort(My_Array, Sorted_Array);
     My_Par_Alg.Print_Array(My_Array);

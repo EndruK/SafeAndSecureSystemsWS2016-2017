@@ -1,12 +1,11 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 package body Parallel_Algorithms is
     function Merge(Left  : in Array_Access_Type;
                    Right : in Array_Access_Type)
                    return Array_Access_Type is
-        Result : Array_Access_Type := new Array_Type(Left'First..Right'Last);
+        Result : constant Array_Access_Type := new Array_Type(Left'First..Right'Last);
         L : Integer := Left'First;
         R : Integer := Right'First;
         RI : Integer := Result'First;
@@ -67,7 +66,6 @@ package body Parallel_Algorithms is
 --------------------------------------------------------------------------------
     procedure Parallel_Merge_Sort(Input: Array_Access_Type;
                                   Result: out Array_Access_Type) is
---------------------------------------------------------------------------------
         task type Partial_Merge_Sort is
             entry Sort(Item_Array : in Array_Access_Type);
             entry Get_Result(Result : out Array_Access_Type);
@@ -83,11 +81,9 @@ package body Parallel_Algorithms is
             end Get_Result;
         end Partial_Merge_Sort;
 --------------------------------------------------------------------------------
-        Result_Temp : Array_Access_Type := new Array_Type(Input'First..Input'Last);
---------------------------------------------------------------------------------
     begin
         declare
-            Pivot : Integer := Integer(Float'Floor(Float(Input'Length) / 2.0));
+            Pivot : constant Integer := Integer(Float'Floor(Float(Input'Length) / 2.0));
             Part_Array_A : Array_Access_Type := new Array_Type(Input'First..Pivot);
             Part_Array_B : Array_Access_Type := new Array_Type((Pivot+1)..Input'Last);
         begin

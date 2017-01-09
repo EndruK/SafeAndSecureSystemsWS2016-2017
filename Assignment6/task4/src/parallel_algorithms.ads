@@ -2,7 +2,6 @@
 -- K. Gerrit Lünsdorf 100141
 generic
     type Item_Type is private;
-    with function "="(Left: Item_Type; Right: Item_Type) return Boolean;
     with function "<"(Left: Item_Type; Right: Item_Type) return Boolean is <>;
     with procedure Put_Item(Item: Item_Type);
 package Parallel_Algorithms is
