@@ -11,6 +11,18 @@ package GF2n is
     function "*"(X: Element_Type; Y: Element_Type) return Element_Type;
     function "/"(X: Element_Type; Y: Element_Type) return Element_Type;
 
+    function Shift_Left
+        (Value : Element_Type;
+         Amount: Natural)
+         return Element_Type;
+    pragma Import (Intrinsic, Shift_Left);
+
+    function Shift_Right
+        (Value : Element_Type;
+         Amount: Natural)
+         return Element_Type;
+    pragma Import (Intrinsic, Shift_Right);
+
     function Find_Inverse(X: Element_Type) return Element_Type;
     function GCD(X: Element_Type; Y: Element_Type) return Element_Type;
     function Is_Primitive(X: Element_Type) return Boolean;
