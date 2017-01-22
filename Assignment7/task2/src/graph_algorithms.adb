@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 package body Graph_Algorithms is
@@ -97,15 +99,11 @@ package body Graph_Algorithms is
             begin
                 Sorted_Edge_Vector.Delete(Index);
                 Add_Edge(Temp_Graph, Edge);
-                Print_Edges(Temp_Graph);
-                Put_Line("");
-                Put_Line("");
                 if not Has_Loop(Temp_Graph) then
                     Add_Edge(Min_Span_Tree, Edge);
                 end if;
             end;
         end loop;
-        Put_Line("------------------");
         return Min_Span_Tree;
     end Find_Min_Spanning_Tree;
 
@@ -122,29 +120,27 @@ package body Graph_Algorithms is
             elsif not Visited_Vertices.contains(G.Edges(I).To) then
                 Append(Visited_Vertices, G.Edges(I).To);
             else
-                -- declare
-                --     Temp_Graph : Graph_Type := G;
-                --     Current_Vertex_From : Vertex_Type := G.Edges(I).From;
-                --     Current_Vertex_To : Vertex_Type := G.Edges(I).To;
-                -- begin
-                --     -- remove the edge
-                --     if Remove_Edge(Temp_Graph,
-                --                    Current_Vertex_From,
-                --                    Current_Vertex_To) then
-                --         for J in First_Index(Temp_Graph.Edges)..
-                --                  Last_Index(Temp_Graph.Edges) loop
-                --             if Temp_Graph.Edges(J).From = Current_Vertex_From or
-                --                Temp_Graph.Edges(J).To = Current_Vertex_To     or
-                --                Temp_Graph.Edges(J).From = Current_Vertex_To   or
-                --                Temp_Graph.Edges(J).To = Current_Vertex_From then
-                --                 Result := True;
-                --                 exit;
-                --             end if;
-                --         end loop;
-                --     end if;
-                -- end;
-                Result := True;
-                Result := True;
+                declare
+                    Temp_Graph : Graph_Type := G;
+                    Current_Vertex_From : Vertex_Type := G.Edges(I).From;
+                    Current_Vertex_To : Vertex_Type := G.Edges(I).To;
+                begin
+                    -- remove the edge
+                    if Remove_Edge(Temp_Graph,
+                                   Current_Vertex_From,
+                                   Current_Vertex_To) then
+                        for J in First_Index(Temp_Graph.Edges)..
+                                 Last_Index(Temp_Graph.Edges) loop
+                            if Temp_Graph.Edges(J).From = Current_Vertex_From or
+                               Temp_Graph.Edges(J).To = Current_Vertex_To     or
+                               Temp_Graph.Edges(J).From = Current_Vertex_To   or
+                               Temp_Graph.Edges(J).To = Current_Vertex_From then
+                                Result := True;
+                                exit;
+                            end if;
+                        end loop;
+                    end if;
+                end;
             end if;
         end loop;
         return Result;
