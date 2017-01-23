@@ -14,12 +14,4 @@ package GF2n is
     function Find_Inverse(X: Element_Type) return Element_Type;
     function GCD(X: Element_Type; Y: Element_Type) return Element_Type;
     function Is_Primitive(X: Element_Type) return Boolean;
-
-    -- Helper functions:
-    -- function Get_Bit(Target: In Element_Type) return String;
-    -- function Get_Order(Target: In Element_Type) return Integer;
-
-    -- function Shift_Left (Value : Element_Type; Amount: Natural) return Element_Type;
-
-    -- function Shift_Right (Value : Element_Type; Amount: Natural) return Element_Type;
 end GF2n;

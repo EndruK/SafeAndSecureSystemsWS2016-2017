@@ -11,13 +11,12 @@ procedure Main is
 
     Y : constant GF_2n := 2#1010#;
     X : constant GF_2n := 2#0011#;
-    -- X : constant GF_2n := 2#01010011#;
-    -- Y : constant GF_2n := 2#11001010#;
     Temp : GF_2n;
     Temp_Bool : Boolean;
 
 begin
     Ada.Text_IO.Put_Line("########### MAIN ###########");
+
     Temp := GF."+"(X,Y);
     Ada.Text_IO.Put_Line(Temp'Image);
 
@@ -35,5 +34,7 @@ begin
 
     Temp := GF.Find_Inverse(X);
     Ada.Text_IO.Put_Line(Temp'Image);
+    
     Temp_Bool := GF.Is_Primitive(X);
+    Ada.Text_IO.Put_Line(Temp_Bool'Image);
 end Main;
