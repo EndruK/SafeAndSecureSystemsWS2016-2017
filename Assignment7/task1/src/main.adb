@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO, gf2n;
 
 procedure Main is
@@ -34,7 +36,7 @@ begin
 
     Temp := GF.Find_Inverse(X);
     Ada.Text_IO.Put_Line(Temp'Image);
-    
+
     Temp_Bool := GF.Is_Primitive(X);
     Ada.Text_IO.Put_Line(Temp_Bool'Image);
 end Main;

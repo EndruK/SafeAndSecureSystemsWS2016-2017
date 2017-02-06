@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 generic
     -- Example: A type GF_2_4_Type is mod 2**4 means that we consider the
     -- elements of Galois Field (2**4).

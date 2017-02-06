@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO, Ada.Integer_Text_IO;
 package body GF2n is
 
