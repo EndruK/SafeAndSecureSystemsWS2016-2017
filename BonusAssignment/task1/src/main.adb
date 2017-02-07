@@ -5,17 +5,33 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 procedure Main is
-    package My_List_Package is new Lists(Item_Type => Integer);
+    procedure My_Put(Item : Integer) is
+    begin
+        Put(Item, Width => 0);
+    end My_Put;
+    package My_List_Package is new Lists(Item_Type => Integer, Put_Item => My_Put);
     use My_List_Package;
     My_List : List_Type;
-    My_List_2 : List_Type;
 begin
     Put_Line("########### MAIN ###########");
     Put_Line("");
     -- Put(Size(My_List));
-    Append(My_List, 3);
+    Append(My_List, 1);
     Append(My_List, 2);
-    Append(My_List_2, 30);
-    Put(Value(Last(My_List)));
-    Put(Value(Last(My_List_2)));
+    Append(My_List, 3);
+    Append(My_List, 4);
+    Append(My_List, 5);
+    Insert(My_List, Pred(Last(My_List)), 33);
+    -- Put(Value(Last(My_List)));
+    -- Put(Size(My_List));
+    Print(My_List);
+    Put_Line("");
+    Put_Line("");
+    declare
+        -- Temp : List_Iterator_Type_Acc :=Pred(Pred(Last(My_List)));
+        Temp : List_Iterator_Type_Acc := Pred(Pred(Pred(Last(My_List))));
+    begin
+        Delete(My_List, Temp);
+    end;
+    Print(My_List);
 end Main;
