@@ -1,5 +1,4 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 package body Lists is
     function First(List: List_Type) return List_Iterator_Type_Acc is
     begin
@@ -9,7 +8,8 @@ package body Lists is
         return List.First;
     end First;
 --------------------------------------------------------------------------------
-    function Last (List: List_Type) return List_Iterator_Type_Acc is
+    function Last (List: List_Type)
+            return List_Iterator_Type_Acc is
     begin
         if List.Last = Null then
             raise Iterator_Error;
@@ -17,7 +17,8 @@ package body Lists is
         return List.Last;
     end Last;
 --------------------------------------------------------------------------------
-    function Succ (Iterator: List_Iterator_Type_Acc) return List_Iterator_Type_Acc is
+    function Succ (Iterator: List_Iterator_Type_Acc)
+            return List_Iterator_Type_Acc is
     begin
         if Iterator.Succ = Null then
             raise Iterator_Error;
@@ -25,7 +26,8 @@ package body Lists is
         return Iterator.Succ;
     end Succ;
 --------------------------------------------------------------------------------
-    function Pred (Iterator: List_Iterator_Type_Acc) return List_Iterator_Type_Acc is
+    function Pred (Iterator: List_Iterator_Type_Acc)
+            return List_Iterator_Type_Acc is
     begin
         if Iterator.Pred = Null then
             raise Iterator_Error;
@@ -39,9 +41,9 @@ package body Lists is
     end Value;
 --------------------------------------------------------------------------------
     function Size (List: List_Type) return Natural is
-        First_Item : List_Iterator_Type_Acc := List.First;
+        First_Item : constant List_Iterator_Type_Acc := List.First;
         Current_Item : List_Iterator_Type_Acc := First_Item;
-        Last_Item : List_Iterator_Type_Acc := List.Last;
+        Last_Item : constant List_Iterator_Type_Acc := List.Last;
         Count : Natural := 1;
     begin
         if First_Item = Null or Last_Item = Null then
@@ -53,7 +55,7 @@ package body Lists is
         while Current_Item.Succ /= Null loop
             Count := Count + 1;
             declare
-                Succ : List_Iterator_Type_Acc := Current_Item.Succ;
+                Succ : constant List_Iterator_Type_Acc := Current_Item.Succ;
             begin
                 Current_Item := Succ;
             end;
@@ -62,8 +64,8 @@ package body Lists is
     end Size;
 --------------------------------------------------------------------------------
     procedure Append(List: in out List_Type; Item: Item_Type) is
-        Last_Item : List_Iterator_Type_Acc := List.Last;
-        New_Item : List_Iterator_Type_Acc := new List_Iterator_Type;
+        Last_Item : constant List_Iterator_Type_Acc := List.Last;
+        New_Item : constant List_Iterator_Type_Acc := new List_Iterator_Type;
     begin
         New_Item.Value := Item;
         List.Last := New_Item;
@@ -79,8 +81,8 @@ package body Lists is
     end Append;
 --------------------------------------------------------------------------------
     procedure Prepend(List: in out List_Type; Item: Item_Type) is
-        First_Item : List_Iterator_Type_Acc := List.First;
-        New_Item : List_Iterator_Type_Acc := new List_Iterator_Type;
+        First_Item : constant List_Iterator_Type_Acc := List.First;
+        New_Item : constant List_Iterator_Type_Acc := new List_Iterator_Type;
     begin
         New_Item.Value := Item;
         List.First := New_Item;
@@ -97,8 +99,8 @@ package body Lists is
    procedure Insert(List: in out List_Type;
                      Iterator: in List_Iterator_Type_Acc;
                      Item: Item_Type) is
-        New_Item : List_Iterator_Type_Acc := new List_Iterator_Type;
-        Old_Pred : List_Iterator_Type_Acc := Iterator.Pred;
+        New_Item : constant List_Iterator_Type_Acc := new List_Iterator_Type;
+        Old_Pred : constant List_Iterator_Type_Acc := Iterator.Pred;
     begin
         if Iterator = Null then
             raise Iterator_Error;
@@ -118,17 +120,25 @@ package body Lists is
     procedure Delete(List: in out List_Type;
                      Iterator: in out List_Iterator_Type_Acc) is
     begin
-        if Iterator.Pred /= Null then
-            Iterator.Pred.Succ := Iterator.Succ;
-        else
+        if Iterator = Null then
+            raise Iterator_Error;
+        end if;
+        if Iterator.Succ = Null and Iterator.Pred = Null then
+            -- Iterator is only remaining element in list
+            List.First := Null;
+            List.Last := Null;
+        elsif Iterator.Pred = Null and Iterator.Succ /= Null then
+            -- Iterator is first element of list
             Iterator.Succ.Pred := Null;
             List.First := Iterator.Succ;
-        end if;
-        if Iterator.Succ /= Null then
-            Iterator.Succ.Pred := Iterator.Pred;
-        else
+        elsif Iterator.Succ = Null and Iterator.Pred /= Null then
+            -- Iterator is last element of list
             Iterator.Pred.Succ := Null;
             List.Last := Iterator.Pred;
+        else
+            -- Iterator is somewhere between first and last
+            Iterator.Succ.Pred := Iterator.Pred;
+            Iterator.Pred.Succ := Iterator.Succ;
         end if;
         Free(Iterator);
     end Delete;
