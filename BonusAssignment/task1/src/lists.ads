@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Unchecked_Deallocation;
 generic
     type Item_Type is private;
@@ -11,9 +13,11 @@ package Lists is
     -- Returns an Iterator that points to the first item of the list.
     function Last (List: List_Type) return List_Iterator_Type_Acc;
     -- Returns an Iterator that points to the last item of the list.
-    function Succ (Iterator: List_Iterator_Type_Acc) return List_Iterator_Type_Acc;
+    function Succ (Iterator: List_Iterator_Type_Acc)
+            return List_Iterator_Type_Acc;
     -- Returns Iterator_Error if Iterator is null or points to the last item.
-    function Pred (Iterator: List_Iterator_Type_Acc) return List_Iterator_Type_Acc;
+    function Pred (Iterator: List_Iterator_Type_Acc)
+            return List_Iterator_Type_Acc;
     -- Returns Iterator_Error if Iterator is null or points to the first item.
     function Value(Iterator: List_Iterator_Type_Acc) return Item_Type;
     -- Returns the value at the current position of Iterator.
