@@ -20,4 +20,9 @@ package body Password_Cracking_Context is
     begin
         Null;
     end Next;
+--------------------------------------------------------------------------------
+    task body Hash_Task is
+    begin
+        Null;
+    end Hash_Task;
 end Password_Cracking_Context;
