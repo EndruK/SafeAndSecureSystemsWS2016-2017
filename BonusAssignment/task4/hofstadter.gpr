@@ -1,0 +1,10 @@
+Project Hofstadter is
+	for Source_Dirs use ("src");
+	for Object_Dir use "bin";
+	for Exec_Dir use ".";
+	for Main use ("main.adb");
+
+	package Compiler is
+		for Default_Switches ("Ada") use ("-gnatwa") & ("-gnato") & ("-gnat12");
+	end Compiler;
+end Hofstadter;
