@@ -8,7 +8,7 @@ package body Password_Cracking_Context is
     end Compute_Hash;
 --------------------------------------------------------------------------------
     procedure First(Password: out Password_Type) is
-        Result : Password_Type := (others => 'a');
+        Result : Password_Type := (others => Alphabet(1));
     begin
         Password := Result;
     end First;
@@ -16,7 +16,7 @@ package body Password_Cracking_Context is
     function  Has_Next(Password: Password_Type) return Boolean is
     begin
         for C in Password'Range loop
-            if Password(C) /= 'Z' then
+            if Password(C) /= Alphabet(Alphabet'Last) then
                 return True;
             end if;
         end loop;
@@ -28,11 +28,11 @@ package body Password_Cracking_Context is
         if Has_Next(Password) then
             for C in Password'Range loop
                 if Get_Character_Index(Password(C)) < 52 then
-                    Password(C) := Character_String(
+                    Password(C) := Alphabet(
                         Get_Character_Index(Password(C)) + 1);
                     exit;
                 else
-                    Password(C) := Character_String(1);
+                    Password(C) := Alphabet(1);
                 end if;
             end loop;
         end if;
@@ -40,8 +40,8 @@ package body Password_Cracking_Context is
 --------------------------------------------------------------------------------
     function Get_Character_Index(Char : in Character) return Positive is
     begin
-        for C in Character_String'Range loop
-            if Char = Character_String(C) then
+        for C in Alphabet'Range loop
+            if Char = Alphabet(C) then
                 return C;
             end if;
         end loop;
