@@ -13,5 +13,7 @@ package Password_Cracking_Context is
     function  Has_Next(Password: Password_Type) return Boolean;
     procedure Next(Password: in out Password_Type);
 private
-    task type Hash_Task;
+    Character_String : String :=
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    function Get_Character_Index(Char : in Character) return Positive;
 end Password_Cracking_Context;
