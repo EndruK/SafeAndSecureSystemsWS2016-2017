@@ -1,7 +1,8 @@
 generic
     Num_Tasks: Positive;
 package Hofstadter is
-    type myArray is array(Positive range <>) of Positive;
+    type QArray is array(Positive range <>) of Positive;
+    type myArray is access QArray;
 
     function Compute_Q_Sequence_Sequential(N: Positive) return Positive;
 

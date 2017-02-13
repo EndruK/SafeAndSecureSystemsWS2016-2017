@@ -3,7 +3,7 @@ use Ada.Integer_Text_IO;
 
 package body Hofstadter is
     function Compute_Q_Sequence_Sequential(N: Positive) return Positive is
-        Q_Numbers: myArray(1..N);
+        Q_Numbers: myArray := new QArray(1..N);
 
     begin
         Q_Numbers(1) := 1;
