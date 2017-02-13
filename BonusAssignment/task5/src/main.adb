@@ -7,12 +7,13 @@ with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Command_line; use Ada.Command_line;
 
 procedure Main is
-    package PCC is new Password_Cracking_Context(Num_Password_Chars => 4, Num_Tasks => 2);
+    Filename : String := Argument(1);
+    Task_Count : Positive := Positive'Value(Argument(2));
+    Max_Time : Positive := Positive'Value(Argument(3));
+    package PCC is new Password_Cracking_Context(Num_Password_Chars => 4,
+        Num_Tasks => Task_Count);
     package PC is new Password_Cracking(PCC);
     Success : Boolean := False;
-    Filename : String := "hashfile";
-    Task_Count : Natural;
-    Max_Time : Natural;
     function Get_Hash_Count(Filename : in String) return Natural is
         Hash_Count : Natural := 0;
         Input_File : File_Type;
@@ -29,10 +30,6 @@ procedure Main is
     end Get_Hash_Count;
 begin
     Put_Line("########### MAIN ###########");
-    -- Filename := Argument(1);
-    -- Task_Count := Integer'Value(Argument(2));
-    Task_Count := 2;
-    Max_Time := 60;
     declare
         Input_File : File_Type;
         -- Hash_Count : Natural := Get_Hash_Count(Filename);
