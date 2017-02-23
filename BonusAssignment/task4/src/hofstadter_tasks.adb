@@ -11,6 +11,7 @@ package body Hofstadter_Tasks is
         accept Call_Compute_Q(N : in Positive) do
             Given_N := N;
         end Call_Compute_Q;
+        delay 1.0;
     	Put(HP.Compute_Q_Sequence_Sequential(Given_N));
     end Hofstadter_Task;
 end Hofstadter_Tasks;

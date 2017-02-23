@@ -15,12 +15,12 @@ procedure Main is
 begin
 	Put_Line("Start Main");
 	select
-		Task_Q.Call_Compute_Q(Q_Number);
-		Put_Line("Start HP_Task");
-	or
 		delay Timelimit;
 		Put_Line("Took to long: Quit.");
+		-- abort Task_Q;
+	then abort
+		Task_Q.Call_Compute_Q(Q_Number);
+		Put_Line("Start HP_Task");
 	end select;
     -- Put(HP.Compute_Q_Sequence_Sequential(Q_Number));
-
 end Main;
