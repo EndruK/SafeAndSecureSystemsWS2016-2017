@@ -7,6 +7,4 @@ package Password_Cracking is
     procedure Find_Passwords(Hashes:    Hash_Array_Type;
                              Passwords: out Password_Array_Type;
                              Success:   out Boolean);
-    task type Hash_Minion is
-    end Hash_Minion;
 end Password_Cracking;
