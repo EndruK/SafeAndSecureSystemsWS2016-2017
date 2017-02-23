@@ -1,7 +1,7 @@
 generic
 package Hofstadter_Tasks is
+    procedure Set_TTL(T : in Duration);
+    procedure Set_Target_Value(N : in Positive);
+    procedure Init;
 
-    task type Hofstadter_Task is
-        entry Call_Compute_Q(N : in Positive);
-    end Hofstadter_Task;
 end Hofstadter_Tasks;

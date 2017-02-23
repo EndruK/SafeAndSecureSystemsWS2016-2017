@@ -8,19 +8,15 @@ procedure Main is
 	package HP renames Hofstadter_Package;
 	package HP_Tasks renames Hofstadter_Tasks_Package;
 
-	Q_Number : constant Positive := 1_000_000;
-	Timelimit : constant Duration := 0.0025;
-	Task_Q : HP_Tasks.Hofstadter_Task;
+	N : constant Positive := 2_000_000;
+	TTL : constant Duration := 0.0025;
+	-- Task_Q : HP_Tasks.Hofstadter_Task; --TODO: gibt es nicht mehr
 
 begin
 	Put_Line("Start Main");
-	select
-		delay Timelimit;
-		Put_Line("Took to long: Quit.");
-		-- abort Task_Q;
-	then abort
-		Task_Q.Call_Compute_Q(Q_Number);
-		Put_Line("Start HP_Task");
-	end select;
+	Put_Line("Setting up values ...");
+	HP_Tasks.Set_Target_Value(N);
+	HP_Tasks.Set_TTL(TTL);
+	HP_Tasks.Init;
     -- Put(HP.Compute_Q_Sequence_Sequential(Q_Number));
 end Main;
