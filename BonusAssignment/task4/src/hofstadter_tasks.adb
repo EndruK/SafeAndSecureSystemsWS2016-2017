@@ -5,25 +5,17 @@ package body Hofstadter_Tasks is
     package Hofstadter_Package is new Hofstadter (Num_Tasks => 1);
     package HP renames Hofstadter_Package;
 
-    type task Master_Type is
-        entry Start;
-        entry Shutdown;
-    end Master_Type;
-
-    type task Worker_Type is
-        entry Master_Start;
-    end Worker_Type;
-
-    type task Timer_Type is
-        entry Start;
-    end Timer_Type;
-
     Timer : Timer_Type;
     Master : Master_Type;
     Worker : Worker_Type;
     TTL : Duration;
     Target_Value : Positive;
+    Calculation_Finished : Boolean := False;
+    Result : Positive;
 
+--------------------------------------------------------------------------------
+-- Task Bodies
+--------------------------------------------------------------------------------
     task body Timer_Type is
         Kill_Time : Time;
     begin
@@ -37,24 +29,27 @@ package body Hofstadter_Tasks is
         loop
             if (clock > Kill_Time) then
                 Ada.Text_IO.Put_Line("Kill_Time: Time to kill.");
-                abort Master;
+                Master.Shutdown;
+                exit;
+            elsif (Calculation_Finished) then
+                exit;
             end if;
         end loop;
-    end Timer_Type;
+end Timer_Type;
 
     task body Master_Type is
     begin
         loop
             select
                 accept Start;
-                Ada.Text_IO.Put_Line("Start HP_Task");
-                select
-                    Worker.Master_Start;
-                or
-                    delay 5.0;
-                end select;
+                Ada.Text_IO.Put_Line("Start calculations.");
+                Worker.Master_Start;
             or
-                accept Shutdown;
+                accept Shutdown do
+                    Ada.Text_IO.Put_Line("Master: stopping.");
+                end Shutdown;
+                Worker.Stop;
+                -- abort Worker;
                 exit;
             or
                 terminate;
@@ -64,15 +59,28 @@ package body Hofstadter_Tasks is
 
     task body Worker_Type is
     begin
-        select
-            accept Master_Start;
-        end select;
-        delay 3.0;
-        Put(HP.Compute_Q_Sequence_Sequential(Target_Value));
+        loop
+            select
+                accept Master_Start;
+                Result := HP.Compute_Q_Sequence_Sequential(Target_Value);
+                Calculation_Finished := True;
+                -- Worker.Show_Result;
+            or
+                accept Stop do
+                    Ada.Text_IO.Put_Line("Worker: stopping.");
+                end Stop;
+                exit;
+            -- or
+                -- accept Show_Result;
+                -- Put(Result);
+            or
+                terminate;
+            end select;
+        end loop;
     end Worker_Type;
 
 --------------------------------------------------------------------------------
--- Setter
+-- Procedures
 --------------------------------------------------------------------------------
     procedure Init is
     begin
