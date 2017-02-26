@@ -3,11 +3,11 @@ package Hofstadter_Tasks is
     task type Master_Type is
         entry Start;
         entry Shutdown;
+        entry Show_Result;
     end Master_Type;
 
     task type Worker_Type is
         entry Master_Start;
-        -- entry Show_Result;
         entry Stop;
     end Worker_Type;
 

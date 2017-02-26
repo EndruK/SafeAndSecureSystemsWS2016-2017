@@ -40,6 +40,7 @@ package body Hofstadter_Tasks is
                 Master.Shutdown;
                 exit;
             elsif (Calculation_Finished) then
+                Master.Show_Result;
                 exit;
             end if;
         end loop;
@@ -60,6 +61,12 @@ package body Hofstadter_Tasks is
                 -- abort Worker;
                 exit;
             or
+                accept Show_Result do
+                    Worker.Stop;
+                    Ada.Text_IO.Put_Line("Result: " & Integer'Image(Result));
+                end Show_Result;
+                exit;
+            or
                 terminate;
             end select;
         end loop;
@@ -72,15 +79,11 @@ package body Hofstadter_Tasks is
                 accept Master_Start;
                 Result := HP.Compute_Q_Sequence_Sequential(Target_Value);
                 Calculation_Finished := True;
-                -- Worker.Show_Result;
             or
                 accept Stop do
                     Ada.Text_IO.Put_Line("Worker: stopping.");
                 end Stop;
                 exit;
-            -- or
-                -- accept Show_Result;
-                -- Put(Result);
             or
                 terminate;
             end select;
