@@ -5,6 +5,9 @@ package body Hofstadter_Tasks is
     package Hofstadter_Package is new Hofstadter (Num_Tasks => 1);
     package HP renames Hofstadter_Package;
 
+    Pressed_Key : Character;
+    Key_Triggered : Boolean;
+
     Timer : Timer_Type;
     Master : Master_Type;
     Worker : Worker_Type;
@@ -27,15 +30,20 @@ package body Hofstadter_Tasks is
             terminate;
         end select;
         loop
+            Ada.Text_IO.Get_Immediate(Pressed_Key, Key_Triggered);
             if (clock > Kill_Time) then
                 Ada.Text_IO.Put_Line("Kill_Time: Time to kill.");
+                Master.Shutdown;
+                exit;
+            elsif (Pressed_Key = 'q' and Key_Triggered) then
+                Ada.Text_IO.Put_Line("User interrupt: Quit.");
                 Master.Shutdown;
                 exit;
             elsif (Calculation_Finished) then
                 exit;
             end if;
         end loop;
-end Timer_Type;
+    end Timer_Type;
 
     task body Master_Type is
     begin

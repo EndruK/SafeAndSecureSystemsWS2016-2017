@@ -9,7 +9,7 @@ procedure Main is
 	package HP_Tasks renames Hofstadter_Tasks_Package;
 
 	N : constant Positive := 2_000_000;
-	TTL : constant Duration := 0.0025;
+	TTL : constant Duration := 5.0025;
 	-- Task_Q : HP_Tasks.Hofstadter_Task; --TODO: gibt es nicht mehr
 
 begin
