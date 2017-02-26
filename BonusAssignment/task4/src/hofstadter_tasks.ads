@@ -7,7 +7,7 @@ package Hofstadter_Tasks is
     end Master_Type;
 
     task type Worker_Type is
-        entry Master_Start;
+        entry Start;
         entry Stop;
     end Worker_Type;
 

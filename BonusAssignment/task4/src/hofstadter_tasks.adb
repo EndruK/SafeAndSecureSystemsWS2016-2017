@@ -52,13 +52,12 @@ package body Hofstadter_Tasks is
             select
                 accept Start;
                 Ada.Text_IO.Put_Line("Start calculations.");
-                Worker.Master_Start;
+                Worker.Start;
             or
                 accept Shutdown do
                     Ada.Text_IO.Put_Line("Master: stopping.");
                 end Shutdown;
                 Worker.Stop;
-                -- abort Worker;
                 exit;
             or
                 accept Show_Result do
@@ -76,7 +75,7 @@ package body Hofstadter_Tasks is
     begin
         loop
             select
-                accept Master_Start;
+                accept Start;
                 Result := HP.Compute_Q_Sequence_Sequential(Target_Value);
                 Calculation_Finished := True;
             or

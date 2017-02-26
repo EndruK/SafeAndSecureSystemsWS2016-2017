@@ -10,6 +10,8 @@ procedure Main is
 
 	N : constant Positive := 2_000_000;
 	TTL : constant Duration := 0.0025;
+	-- TTL : constant Duration := 0.1025; -- enough calculation time for one task
+
 	-- Task_Q : HP_Tasks.Hofstadter_Task; --TODO: gibt es nicht mehr
 
 begin
@@ -18,5 +20,4 @@ begin
 	HP_Tasks.Set_Target_Value(N);
 	HP_Tasks.Set_TTL(TTL);
 	HP_Tasks.Init;
-    -- Put(HP.Compute_Q_Sequence_Sequential(Q_Number));
 end Main;
