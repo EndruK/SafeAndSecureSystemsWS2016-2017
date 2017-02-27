@@ -8,13 +8,34 @@ package body Hofstadter_Tasks is
     Pressed_Key : Character;
     Key_Triggered : Boolean;
 
+    Worker_List : Worker_Array_Type(1 .. N_Tasks);
+    Result : Result_Protected_Type;
+    Counter : Positive := 2;
+
     Timer : Timer_Type;
     Master : Master_Type;
     Worker : Worker_Type;
     TTL : Duration;
-    Target_Value : Positive;
+    -- Target_Value : Positive;
     Calculation_Finished : Boolean := False;
-    Result : Positive;
+    -- Result : Positive;
+
+--------------------------------------------------------------------------------
+-- Protected Objects
+--------------------------------------------------------------------------------
+protected body Result_Protected_Type is
+    function Get_Result (At_Index : in Positive) return Positive is
+        begin
+            return Data(At_Index);
+        end Get_Result;
+    procedure Set_Result (At_Index : in Positive; Result_Value : in Positive) is
+        begin
+            Data(At_Index) := Result_Value;
+            if At_Index = Target_Value then
+                Calculation_Finished := True;
+            end if;
+        end Set_Result;
+    end Result_Protected_Type;
 
 --------------------------------------------------------------------------------
 -- Task Bodies
@@ -48,21 +69,40 @@ package body Hofstadter_Tasks is
 
     task body Master_Type is
     begin
+        select
+            accept Start;
+            for I in Worker_List'Range loop
+                Counter := Counter + 1;
+                Worker_List(I).Start(Counter);
+                Ada.Text_IO.Put_Line(Integer'Image(I));
+            end loop;
+            Ada.Text_IO.Put_Line("Start calculations.");
+            --Worker.Start;
+        end select;
         loop
             select
-                accept Start;
-                Ada.Text_IO.Put_Line("Start calculations.");
-                Worker.Start;
-            or
                 accept Shutdown do
+                    for I in Worker_List'Range loop
+                        Worker_List(I).Stop;
+                        Ada.Text_IO.Put_Line("Stopping Worker Number: " & Integer'Image(I));
+                    end loop;
                     Ada.Text_IO.Put_Line("Master: stopping.");
                 end Shutdown;
-                Worker.Stop;
                 exit;
             or
+                accept Worker_Needs_Work do
+                    Counter := Counter + 1;
+                    --Task_Id.Start(Counter);
+                end Worker_Needs_Work;
+            or
                 accept Show_Result do
-                    Worker.Stop;
-                    Ada.Text_IO.Put_Line("Result: " & Integer'Image(Result));
+                    for I in Worker_List'Range loop
+                        Worker_List(I).Stop;
+                        -- Ada.Text_IO.Put_Line("Stopping Worker Number: " & Integer'Image(I));
+                    end loop;
+                    Ada.Text_IO.Put_Line("Target_Value: " & Integer'Image(Target_Value));
+                    Ada.Text_IO.Put_Line("Counter: " & Integer'Image(Counter));
+                    Ada.Text_IO.Put_Line("Result: " & Integer'Image(Result.Get_Result(Counter)));
                 end Show_Result;
                 exit;
             or
@@ -72,12 +112,18 @@ package body Hofstadter_Tasks is
     end Master_Type;
 
     task body Worker_Type is
+        Calc_Value : Positive;
     begin
         loop
             select
-                accept Start;
-                Result := HP.Compute_Q_Sequence_Sequential(Target_Value);
-                Calculation_Finished := True;
+                accept Start(Given_Value : in Positive) do
+                    Calc_Value := Given_Value;
+                end Start;
+                -- Compute_Q_Sequence_Sequential(Calc_Value);
+                Result.Set_Result(Calc_Value,
+                                  Compute_Q_Sequence_Sequential(Calc_Value));
+                -- Calculation_Finished := True;
+                Master.Worker_Needs_Work;
             or
                 accept Stop do
                     Ada.Text_IO.Put_Line("Worker: stopping.");
@@ -94,6 +140,8 @@ package body Hofstadter_Tasks is
 --------------------------------------------------------------------------------
     procedure Init is
     begin
+        Result.Set_Result(1, 1);
+        Result.Set_Result(2, 1);
         select
             Master.Start;
             Timer.Start;
@@ -107,8 +155,22 @@ package body Hofstadter_Tasks is
         TTL := T;
     end Set_TTL;
 
-    procedure Set_Target_Value(N : in Positive) is
+--    procedure Set_Target_Value(N : in Positive) is
+--    begin
+--        Target_Value := N;
+--    end Set_Target_Value;
+
+--------------------------------------------------------------------------------
+-- Functions
+--------------------------------------------------------------------------------
+    function Compute_Q_Sequence_Sequential(N: Positive) return Positive is
+        Computed_Q : Positive;
     begin
-        Target_Value := N;
-    end Set_Target_Value;
+        for I in Positive range 3..N loop
+            Computed_Q := (
+                I - Result.Get_Result(I-1)) +
+                Result.Get_Result(I - Result.Get_Result(I-2));
+        end loop;
+        return Computed_Q;
+    end Compute_Q_Sequence_Sequential;
 end Hofstadter_Tasks;
