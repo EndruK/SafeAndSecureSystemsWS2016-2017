@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 generic
     N_Tasks : Positive;
     Target_Value : Positive;
@@ -23,9 +25,10 @@ package Hofstadter_Tasks is
 
     type Worker_Array_Type is array(Positive range <>) of Worker_Type;
     type Data_Array is array(Positive range <>) of Positive;
+    type Result_Array is array(Positive range <>) of myArray;
 
     procedure Set_TTL(T : in Duration);
     procedure Init;
 
-    function Compute_Q_Sequence_Sequential(N: Positive) return Positive;
+    function Compute_Q_Sequence_Sequential(N: Positive) return myArray;
 end Hofstadter_Tasks;

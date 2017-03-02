@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Integer_Text_IO, Ada.Text_IO, Hofstadter, Ada.Calendar;
 use Ada.Integer_Text_IO, Ada.Calendar;
 
@@ -10,7 +12,7 @@ package body Hofstadter_Tasks is
     TTL : Duration;
     Counter : Natural := 0;
     Calculation_Finished : Boolean := False;
-    Result : Data_Array(1 .. N_Tasks);
+    Result : Result_Array(1 .. N_Tasks);
 
     Timer : Timer_Type;
     Master : Master_Type;
@@ -39,7 +41,8 @@ package body Hofstadter_Tasks is
             if (clock > Kill_Time) then
                 Ada.Text_IO.Put_Line("Kill_Time: Time to kill.");
                 Worker_Shutdown := True;
-                Master.Shutdown;
+                Master.Show_Result;
+                -- Master.Shutdown;
                 exit;
             elsif (Pressed_Key = 'q' and Key_Triggered) then
                 Ada.Text_IO.Put_Line("User interrupt: Quit.");
@@ -60,6 +63,7 @@ package body Hofstadter_Tasks is
     end Timer_Type;
 
     task body Master_Type is
+        tmp_myArray : myArray;
     begin
         select
             accept Start;
@@ -90,7 +94,22 @@ package body Hofstadter_Tasks is
                     Ada.Text_IO.Put_Line("Target_Value: " & Integer'Image(Target_Value));
                     Ada.Text_IO.Put_Line("Number of Tasks: " & Integer'Image(Counter));
                     for I in Result'Range loop
-                        Ada.Text_IO.Put_Line("Result of Q(" & Integer'Image(Target_Value - I + 1) & "): " & Integer'Image(Result(I)));
+                        tmp_myArray := Result(I);
+                        if Worker_Shutdown then
+                            Ada.Text_IO.Put_Line("Calculated Results of Task" & Integer'Image(I) & ": ");
+                        else
+                            Ada.Text_IO.Put_Line("Result of Q(" & Integer'Image(Target_Value - I + 1) & "): ");
+                        end if;
+                        for J in tmp_myArray'Range loop
+                            if tmp_myArray(J) /= 0 then
+                                if J /= 1 then
+                                    Ada.Text_IO.Put(", " & Integer'Image(tmp_myArray(J)));
+                                else
+                                    Ada.Text_IO.Put(Integer'Image(tmp_myArray(J)));
+                                end if;
+                            end if;
+                        end loop;
+                        Ada.Text_IO.New_Line;
                     end loop;
                 end Show_Result;
                 exit;
@@ -103,6 +122,7 @@ package body Hofstadter_Tasks is
     task body Worker_Type is
         Calc_Value : Positive;
         My_Id : Positive;
+        My_QArray : myArray;
     begin
         loop
             select
@@ -111,7 +131,8 @@ package body Hofstadter_Tasks is
                     Calc_Value := Given_Value;
                     My_Id := Worker_Id;
                 end Start;
-                Result(My_Id) := Compute_Q_Sequence_Sequential(Calc_Value);
+                My_QArray := Compute_Q_Sequence_Sequential(Calc_Value);
+                Result(My_Id) := My_QArray;
                 Worker_Status(My_Id) := True;
             or
                 accept Stop do
@@ -147,7 +168,7 @@ package body Hofstadter_Tasks is
 --------------------------------------------------------------------------------
 -- Functions
 --------------------------------------------------------------------------------
-    function Compute_Q_Sequence_Sequential(N: Positive) return Positive is
+    function Compute_Q_Sequence_Sequential(N: Positive) return myArray is
         Q_Numbers: myArray := new QArray(1..N);
     begin
         Q_Numbers(1) := 1;
@@ -161,6 +182,6 @@ package body Hofstadter_Tasks is
                 exit;
             end if;
         end loop;
-        return Q_Numbers(N);
+        return Q_Numbers;
     end Compute_Q_Sequence_Sequential;
 end Hofstadter_Tasks;
