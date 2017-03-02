@@ -7,35 +7,19 @@ package body Hofstadter_Tasks is
 
     Pressed_Key : Character;
     Key_Triggered : Boolean;
-
-    Worker_List : Worker_Array_Type(1 .. N_Tasks);
-    Result : Result_Protected_Type;
-    Counter : Positive := 2;
+    TTL : Duration;
+    Counter : Natural := 0;
+    Calculation_Finished : Boolean := False;
+    Result : Data_Array(1 .. N_Tasks);
 
     Timer : Timer_Type;
     Master : Master_Type;
     Worker : Worker_Type;
-    TTL : Duration;
-    -- Target_Value : Positive;
-    Calculation_Finished : Boolean := False;
-    -- Result : Positive;
 
---------------------------------------------------------------------------------
--- Protected Objects
---------------------------------------------------------------------------------
-protected body Result_Protected_Type is
-    function Get_Result (At_Index : in Positive) return Positive is
-        begin
-            return Data(At_Index);
-        end Get_Result;
-    procedure Set_Result (At_Index : in Positive; Result_Value : in Positive) is
-        begin
-            Data(At_Index) := Result_Value;
-            if At_Index = Target_Value then
-                Calculation_Finished := True;
-            end if;
-        end Set_Result;
-    end Result_Protected_Type;
+    Worker_List : Worker_Array_Type(1 .. N_Tasks);
+    Worker_Index : Natural := 1;
+    Worker_Shutdown : Boolean := False;
+    Worker_Status : Status_Array(1 .. N_Tasks);
 
 --------------------------------------------------------------------------------
 -- Task Bodies
@@ -54,16 +38,24 @@ protected body Result_Protected_Type is
             Ada.Text_IO.Get_Immediate(Pressed_Key, Key_Triggered);
             if (clock > Kill_Time) then
                 Ada.Text_IO.Put_Line("Kill_Time: Time to kill.");
+                Worker_Shutdown := True;
                 Master.Shutdown;
                 exit;
             elsif (Pressed_Key = 'q' and Key_Triggered) then
                 Ada.Text_IO.Put_Line("User interrupt: Quit.");
+                Worker_Shutdown := True;
                 Master.Shutdown;
                 exit;
             elsif (Calculation_Finished) then
                 Master.Show_Result;
                 exit;
             end if;
+            Status_Loop :
+            for I in Worker_Status'Range loop
+                Calculation_Finished := False;
+                exit Status_Loop when Worker_Status(I) = False;
+                Calculation_Finished := True;
+            end loop Status_Loop;
         end loop;
     end Timer_Type;
 
@@ -72,12 +64,13 @@ protected body Result_Protected_Type is
         select
             accept Start;
             for I in Worker_List'Range loop
+                Worker_List(I).Start(Target_Value - Counter, Worker_Index);
+                Ada.Text_IO.Put_Line("Target_Value: " & Integer'Image(Target_Value - Counter));
+                Ada.Text_IO.Put_Line("Worker_Index: " & Integer'Image(Worker_Index));
                 Counter := Counter + 1;
-                Worker_List(I).Start(Counter);
-                Ada.Text_IO.Put_Line(Integer'Image(I));
+                Worker_Index := Worker_Index + 1;
             end loop;
             Ada.Text_IO.Put_Line("Start calculations.");
-            --Worker.Start;
         end select;
         loop
             select
@@ -90,19 +83,15 @@ protected body Result_Protected_Type is
                 end Shutdown;
                 exit;
             or
-                accept Worker_Needs_Work do
-                    Counter := Counter + 1;
-                    --Task_Id.Start(Counter);
-                end Worker_Needs_Work;
-            or
                 accept Show_Result do
                     for I in Worker_List'Range loop
                         Worker_List(I).Stop;
-                        -- Ada.Text_IO.Put_Line("Stopping Worker Number: " & Integer'Image(I));
                     end loop;
                     Ada.Text_IO.Put_Line("Target_Value: " & Integer'Image(Target_Value));
-                    Ada.Text_IO.Put_Line("Counter: " & Integer'Image(Counter));
-                    Ada.Text_IO.Put_Line("Result: " & Integer'Image(Result.Get_Result(Counter)));
+                    Ada.Text_IO.Put_Line("Number of Tasks: " & Integer'Image(Counter));
+                    for I in Result'Range loop
+                        Ada.Text_IO.Put_Line("Result of Q(" & Integer'Image(Target_Value - I + 1) & "): " & Integer'Image(Result(I)));
+                    end loop;
                 end Show_Result;
                 exit;
             or
@@ -113,20 +102,20 @@ protected body Result_Protected_Type is
 
     task body Worker_Type is
         Calc_Value : Positive;
+        My_Id : Positive;
     begin
         loop
             select
-                accept Start(Given_Value : in Positive) do
+                accept Start(Given_Value : in Positive;
+                             Worker_Id : in Positive) do
                     Calc_Value := Given_Value;
+                    My_Id := Worker_Id;
                 end Start;
-                -- Compute_Q_Sequence_Sequential(Calc_Value);
-                Result.Set_Result(Calc_Value,
-                                  Compute_Q_Sequence_Sequential(Calc_Value));
-                -- Calculation_Finished := True;
-                Master.Worker_Needs_Work;
+                Result(My_Id) := Compute_Q_Sequence_Sequential(Calc_Value);
+                Worker_Status(My_Id) := True;
             or
                 accept Stop do
-                    Ada.Text_IO.Put_Line("Worker: stopping.");
+                    Ada.Text_IO.Put_Line("Worker " & Integer'Image(My_Id) & ": stopping.");
                 end Stop;
                 exit;
             or
@@ -140,8 +129,8 @@ protected body Result_Protected_Type is
 --------------------------------------------------------------------------------
     procedure Init is
     begin
-        Result.Set_Result(1, 1);
-        Result.Set_Result(2, 1);
+        -- Result.Set_Result(1, 1);
+        -- Result.Set_Result(2, 1);
         select
             Master.Start;
             Timer.Start;
@@ -155,22 +144,23 @@ protected body Result_Protected_Type is
         TTL := T;
     end Set_TTL;
 
---    procedure Set_Target_Value(N : in Positive) is
---    begin
---        Target_Value := N;
---    end Set_Target_Value;
-
 --------------------------------------------------------------------------------
 -- Functions
 --------------------------------------------------------------------------------
     function Compute_Q_Sequence_Sequential(N: Positive) return Positive is
-        Computed_Q : Positive;
+        Q_Numbers: myArray := new QArray(1..N);
     begin
+        Q_Numbers(1) := 1;
+        Q_Numbers(2) := 1;
+
         for I in Positive range 3..N loop
-            Computed_Q := (
-                I - Result.Get_Result(I-1)) +
-                Result.Get_Result(I - Result.Get_Result(I-2));
+            if not Worker_Shutdown then
+                Q_Numbers(I) := Q_Numbers(I - Q_Numbers(I-1))+
+                                Q_Numbers(I - Q_Numbers(I-2));
+            else
+                exit;
+            end if;
         end loop;
-        return Computed_Q;
+        return Q_Numbers(N);
     end Compute_Q_Sequence_Sequential;
 end Hofstadter_Tasks;

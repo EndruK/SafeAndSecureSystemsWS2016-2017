@@ -1,11 +1,11 @@
-with Ada.Text_IO, Ada.Integer_Text_IO, Hofstadter_Tasks, Armageddon; --Hofstadter, 
+with Ada.Text_IO, Ada.Integer_Text_IO, Hofstadter_Tasks, Armageddon; --Hofstadter,
 use Ada.Text_IO, Ada.Integer_Text_IO, Armageddon;
 
 procedure Main is
-	Number_Of_Tasks : constant Positive := 4;
+	Number_Of_Tasks : constant Positive := 20;
 	N : constant Positive := 2_000_000;
 	-- TTL : constant Duration := 0.0025;
-	TTL : constant Duration := 0.5025; -- enough calculation time for one task
+	TTL : constant Duration := 5.5025; -- enough calculation time for one task
 
 	--package Hofstadter_Package is new Hofstadter (Num_Tasks => 1);
 	package Hofstadter_Tasks_Package is new Hofstadter_Tasks (
