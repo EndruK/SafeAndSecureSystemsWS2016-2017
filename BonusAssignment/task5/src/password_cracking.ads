@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Password_Cracking_Context;
 
 generic
@@ -10,12 +12,10 @@ package Password_Cracking is
                              Success:   out Boolean);
 private
     protected type Collector is
-        -- procedure Set_Password(Index : in Natural; Password : in Password_Type);
         procedure Set_User_Interrupt;
         procedure Set_Timeout_Interrupt;
         function Get_User_Interrupt return Boolean;
         function Get_Timeout_Interrupt return Boolean;
-        -- function Check_Done_All return Boolean;
     private
         User_Interrupt : Boolean := False;
         Timeout_Interrupt : Boolean := False;

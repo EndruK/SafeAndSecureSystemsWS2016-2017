@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Calendar; use Ada.Calendar;
@@ -6,6 +8,7 @@ package body Password_Cracking is
                              Passwords: out Password_Array_Type;
                              Success:   out Boolean) is
         C_Main : Collector;
+--------------------------------------------------------------------------------
         task type Hash_Minion is
             entry Start_Cracking(Hash : in Hash_Type);
             entry Interrupt;
@@ -39,14 +42,15 @@ package body Password_Cracking is
                     Next(Password);
                 end if;
             end loop Minion_Loop;
-            accept Report_Result(Password : out Password_Type; PW_Found : out Boolean) do
+            accept Report_Result(Password : out Password_Type;
+                    PW_Found : out Boolean) do
                 Password := Final_Password;
                 PW_Found := Success;
             end Report_Result;
         end Hash_Minion;
         type Minion_Pool_Type is array(Positive Range 1..Num_Tasks) of Hash_Minion;
         Minion_Pool : Minion_Pool_Type;
-
+--------------------------------------------------------------------------------
         task type User_Input_Task;
         task body User_Input_Task is
             S : String := " ";
@@ -64,7 +68,7 @@ package body Password_Cracking is
                 end if;
             end loop;
         end User_Input_Task;
-
+--------------------------------------------------------------------------------
         task type Timeout_Task is
             entry Start(T : Positive);
         end Timeout_Task;
@@ -87,6 +91,7 @@ package body Password_Cracking is
                 end if;
             end loop;
         end Timeout_Task;
+--------------------------------------------------------------------------------
     begin
         declare
             Hash_Index : Positive := 1;
@@ -117,7 +122,7 @@ package body Password_Cracking is
             end loop;
         end;
     end Find_Passwords;
-
+--------------------------------------------------------------------------------
     protected body Collector is
 
         procedure Set_User_Interrupt is

@@ -32,7 +32,6 @@ begin
     Put_Line("########### MAIN ###########");
     declare
         Input_File : File_Type;
-        -- Hash_Count : Natural := Get_Hash_Count(Filename);
         Filename : constant String := "hashfile";
         Hash_Count : Natural := Get_Hash_Count(Filename);
         Hash_Array : PCC.Hash_Array_Type (Natural Range 1..Hash_Count);

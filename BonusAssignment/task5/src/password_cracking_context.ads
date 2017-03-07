@@ -1,3 +1,5 @@
+-- André Karge 110033
+-- K. Gerrit Lünsdorf 100141
 generic
     Num_Password_Chars: Positive;
     Num_Tasks: Positive;
