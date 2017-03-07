@@ -12,7 +12,7 @@ procedure Main is
     Max_Time : Positive := Positive'Value(Argument(3));
     package PCC is new Password_Cracking_Context(Num_Password_Chars => 4,
         Num_Tasks => Task_Count);
-    package PC is new Password_Cracking(PCC);
+    package PC is new Password_Cracking(PCC, Max_Time);
     Success : Boolean := False;
     function Get_Hash_Count(Filename : in String) return Natural is
         Hash_Count : Natural := 0;
