@@ -1,12 +1,9 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
-with Ada.Integer_Text_IO, Ada.Text_IO, Hofstadter, Ada.Calendar;
+with Ada.Integer_Text_IO, Ada.Text_IO, Ada.Calendar;
 use Ada.Integer_Text_IO, Ada.Calendar;
 
 package body Hofstadter_Tasks is
-    package Hofstadter_Package is new Hofstadter (Num_Tasks => 1);
-    package HP renames Hofstadter_Package;
-
     Pressed_Key : Character;
     Key_Triggered : Boolean;
     TTL : Duration;

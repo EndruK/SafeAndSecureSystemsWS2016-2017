@@ -1,5 +1,8 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
+
+-- Die Aufgabe in Kooperation mit Max Weber geloest.
+
 with Lists;
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;

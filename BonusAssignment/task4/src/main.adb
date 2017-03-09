@@ -1,5 +1,8 @@
 -- André Karge 110033
 -- K. Gerrit Lünsdorf 100141
+
+-- Den seriellen Teil in Kooperation mit Max Weber entwickelt.
+
 with Ada.Text_IO, Hofstadter_Tasks, Ada.Command_line, Armageddon;
 use Ada.Text_IO, Ada.Command_line, Armageddon;
 
